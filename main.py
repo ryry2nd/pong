@@ -1,5 +1,5 @@
 #imports
-from tkinter import Place
+from cv2 import circle
 import pygame, os
 
 #inits
@@ -31,12 +31,26 @@ class Paddle:
         PADDLE = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
         pygame.draw.rect(WIN, WHITE, PADDLE)
 
+#ball
+class Ball:
+    def __init__(self, POS, size):
+        self.x = POS[0]
+        self.y = POS[1]
+        self.size = size
+    def make_it(self):
+        pygame.draw.circle(WIN, WHITE, (self.x, self.y), self.size)
+        
+
 #main funtion
 def main():
-    PLAYER1 = Paddle(10, 100, (30, HEIGHT // 2 - 100))# init paddle 1
-    PLAYER2 = Paddle(10, 100, (WIDTH - 40, HEIGHT // 2 - 100))# init paddle 2
-    run = True
+    #init objects
+    PLAYER1 = Paddle(10, 100, (30, HEIGHT // 2 - 50))
+    PLAYER2 = Paddle(10, 100, (WIDTH - 40, HEIGHT // 2 - 50))
+    BALL = Ball((WIDTH//2,HEIGHT//2), 10)
+    
+    BALL_VEL = 0
 
+    run = True
     clock = pygame.time.Clock()#defines the clock
 
     while run:# game loop
@@ -62,8 +76,12 @@ def main():
             PLAYER2.y += VEL
 
         WIN.fill(BLACK)# fills the screen
-        PLAYER1.make_it()# makes player1
-        PLAYER2.make_it()# makes player 2
+
+        #makes the objects
+        PLAYER1.make_it()
+        PLAYER2.make_it()
+        BALL.make_it()
+        
         pygame.display.update()# updates the display
         
     pygame.quit()#quits
