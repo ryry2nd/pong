@@ -1,5 +1,5 @@
 #imports
-import pygame, os, random
+import pygame, random
 
 #inits
 pygame.init()
@@ -22,6 +22,7 @@ BLACK = (0, 0, 0)
 #screen
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
+pygame.display.set_icon(pygame.image.load('Assets/ball.png'))
 
 # sets the points
 p1Points, p2Points = 0, 0
@@ -44,18 +45,16 @@ class Ball:
     yVel = 0
 
     def __init__(self, size, POS):# init vars
-        self.WIDTH = size[0]
-        self.HEIGHT = size[1]
+        self.size = size
         self.x = POS[0]
         self.y = POS[1]
     def make_it(self):#makes the paddle
-        BALL = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
-        pygame.draw.rect(WIN, WHITE, BALL)
+        pygame.draw.circle(WIN, WHITE, (self.x, self.y), self.size)
     def move(self, players):# moves the player
-        BALL = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
+        BALL = pygame.Rect(self.x, self.y, self.size, self.size)
 
         # bounces off the walls
-        if self.y + self.yVel <= 0 or self.y + self.yVel >= HEIGHT - self.HEIGHT:
+        if self.y + self.yVel <= 0 or self.y + self.yVel >= HEIGHT - self.size:
             self.yVel = -self.yVel
         
         for player in players:# loops through the paddles
@@ -99,7 +98,7 @@ def main():
     #init objects
     PLAYER1 = Paddle((20, 100), (60, HEIGHT // 2 - 50))
     PLAYER2 = Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))
-    BALL = Ball((20, 20), (WIDTH//2 - 10, HEIGHT//2 - 10))
+    BALL = Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10))
 
     run = True
     restart = True
@@ -139,7 +138,7 @@ def main():
         if BALL.x < 0: # if the ball is on the left increace the score by 1 and restart
             p2Points += 1
             run = False
-        elif BALL.x + BALL.WIDTH > WIDTH:# if the ball is on the right increace the score by 1 and restart
+        elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increace the score by 1 and restart
             p1Points += 1
             run = False
 
@@ -148,6 +147,7 @@ def main():
         p2Score_text = SCORE_FONT.render(str(p2Points), 1, WHITE)
 
         WIN.fill(BLACK)# fills the screen
+        pygame.draw.rect(WIN, WHITE, pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
         BALL.move((PLAYER1, PLAYER2)) #move the ball
 
@@ -157,7 +157,7 @@ def main():
         BALL.make_it()
 
         #makes the score
-        WIN.blit(p1Score_text, ((WIDTH//2 - 50) - 100, 0))
+        WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
         WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
 
         pygame.display.update()# updates the display
