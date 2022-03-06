@@ -23,7 +23,6 @@ BLACK = (0, 0, 0)
 #screen
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
-pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'ball.png')))
 
 # sets the points
 p1Points, p2Points = 0, 0
