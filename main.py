@@ -1,5 +1,5 @@
 #imports
-import pygame, os
+import pygame, os, random
 
 #inits
 pygame.init()
@@ -101,11 +101,16 @@ def main():
     PLAYER2 = Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))
     BALL = Ball((20, 20), (WIDTH//2 - 10, HEIGHT//2 - 10))
 
-    BALL.xVel = -3# default vel
-
     run = True
     restart = True
     clock = pygame.time.Clock()#defines the clock
+
+    if p1Points > p2Points:
+        BALL.xVel = 3
+    elif p1Points < p2Points:
+        BALL.xVel = -3
+    else:
+        BALL.xVel = random.choice([-3,3])# default vel
 
     while run:# game loop
         clock.tick(FPS)#fps
