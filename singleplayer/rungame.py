@@ -1,34 +1,23 @@
 #imports
-import pygame, random, os
-from gameObjects import *
+import pygame, random
+from singleplayer.gameObjects import *
 
 #inits
 pygame.init()
 pygame.font.init()
-pygame.mixer.init()
 
 #constents
-WIDTH, HEIGHT = 900, 500
-FPS = 60
 VEL = 5
 
 #fonts
 SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
 
-#colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-
-#screen
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Pong")
-
 # sets the points
 p1Points, p2Points = 0, 0
 
 # checks if there is a win
-def checkWin():
+def checkWin(WIN, HEIGHT):
     win = None
 
     if p1Points == 7:# if there is a win, set a winner
@@ -40,14 +29,23 @@ def checkWin():
         WIN.fill(BLACK)
         WIN.blit(WIN_FONT.render(win + " wins!", 1, WHITE), (0 + 100, HEIGHT//2 - 50))
         pygame.display.update()
-        pygame.time.delay(5000)
+        pygame.time.delay(3000)
     
     return win #returns the winner
 
+def restartPoints():
+    global p1Points, p2Points
+    p1Points, p2Points = 0, 0
+
+
 #main funtion
-def main():
+def main(WIN, res, FPS):
     #init vars
     global p1Points, p2Points
+
+    #def width and height
+    WIDTH = res[0]
+    HEIGHT = res[1]
 
     #init objects
     PLAYER1 = Paddle((20, 100), (60, HEIGHT // 2 - 50))
@@ -71,7 +69,8 @@ def main():
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
-                restart = False
+                pygame.quit()
+                exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
@@ -116,15 +115,11 @@ def main():
 
         pygame.display.update()# updates the display
         
-        if checkWin():# checkes if there is a winner
+        if checkWin(WIN, HEIGHT):# checkes if there is a winner
             run = False
             restart = False
     
     if restart:# if it is being restarted, restart
-        main()
-    else:#otherwise, quit
-        pygame.quit()
-
-# if it is being imported run the main
-if __name__ == '__main__':
-    main()
+        main(WIN, (WIDTH, HEIGHT), FPS)
+    else:
+        restartPoints()
