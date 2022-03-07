@@ -10,11 +10,17 @@ BLACK = (0, 0, 0)
 
 # paddle object
 class Paddle:
+    VEL = 5
     def __init__(self, size, POS):#initualise the vars
         self.WIDTH = size[0]
         self.HEIGHT = size[1]
         self.x = POS[0]
         self.y = POS[1]
+    def move(self, directionIsUp):
+        if directionIsUp:
+            self.y -= self.VEL
+        else:
+            self.y += self.VEL
     def make_it(self, WIN):# makes the paddle
         PADDLE = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
         pygame.draw.rect(WIN, WHITE, PADDLE)

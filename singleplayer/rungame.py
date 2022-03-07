@@ -6,9 +6,6 @@ from singleplayer.gameObjects import *
 pygame.init()
 pygame.font.init()
 
-#constents
-VEL = 5
-
 #fonts
 SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
@@ -79,14 +76,14 @@ def main(WIN, res, FPS):
         
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
-        if keys_pressed[pygame.K_w] and PLAYER1.y - VEL > 0:# moves player1 up if in bounds
-            PLAYER1.y -= VEL
-        if keys_pressed[pygame.K_s] and PLAYER1.y + VEL + PLAYER1.HEIGHT < HEIGHT:# moves player1 down if in bounds
-            PLAYER1.y += VEL
-        if keys_pressed[pygame.K_UP] and PLAYER2.y - VEL > 0:# moves player2 up if in bounds
-            PLAYER2.y -= VEL
-        if keys_pressed[pygame.K_DOWN] and PLAYER2.y + VEL + PLAYER2.HEIGHT < HEIGHT:# moves player2 down if in bounds
-            PLAYER2.y += VEL
+        if keys_pressed[pygame.K_w] and PLAYER1.y - PLAYER1.VEL > 0:# moves player1 up if in bounds
+            PLAYER1.move(True)
+        if keys_pressed[pygame.K_s] and PLAYER1.y + PLAYER1.VEL + PLAYER1.HEIGHT < HEIGHT:# moves player1 down if in bounds
+            PLAYER1.move(False)
+        if keys_pressed[pygame.K_UP] and PLAYER2.y - PLAYER2.VEL > 0:# moves player2 up if in bounds
+            PLAYER2.move(True)
+        if keys_pressed[pygame.K_DOWN] and PLAYER2.y + PLAYER2.VEL + PLAYER2.HEIGHT < HEIGHT:# moves player2 down if in bounds
+            PLAYER2.move(False)
 
         if BALL.x < 0: # if the ball is on the left increace the score by 1 and restart
             p2Points += 1
