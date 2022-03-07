@@ -50,9 +50,9 @@ def main():
 
         if clickWindow(WIN, (100, 100), "Single", "Player"):
             single.main(WIN, (WIDTH, HEIGHT), FPS)
-        if clickWindow(WIN, (300, 100), "Multi", "Player"):
+        if clickWindow(WIN, (300, 100), "Find a", "Game"):
             pass
-        if clickWindow(WIN, (500, 100), "Multi", "Player"):
+        if clickWindow(WIN, (500, 100), "Make a", "Server"):
             pass
 
         pygame.display.update()
