@@ -1,6 +1,6 @@
 #imports
 import pygame, random
-from singleplayer.gameObjects import *
+from Assets.gameObjects import *
 
 #inits
 pygame.init()
