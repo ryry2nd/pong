@@ -12,9 +12,7 @@ SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
 
 #main funtion
-def main(WIN, RES, FPS, IP = socket.gethostbyname(socket.gethostname())):
-    #if not IP:
-    #    IP = getServer.main(WIN, RES, FPS)
+def main(WIN, RES, FPS, IP):
     #def width and height
     WIDTH = RES[0]
     HEIGHT = RES[1]

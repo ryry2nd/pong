@@ -3,6 +3,7 @@ from threading import Thread
 import singleplayer.rungame as single
 import multiplayer.client.runClient as client
 import multiplayer.server.runServer as server
+import multiplayer.client.getServer as getServer
 
 #inits
 pygame.init()
@@ -52,7 +53,8 @@ def main():
         if clickWindow(WIN, (100, 100), "Single", "Player"):
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         if clickWindow(WIN, (300, 100), "Find a", "Game"):
-            client.main(WIN, (WIDTH, HEIGHT), FPS)
+            IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)
+            client.main(WIN, (WIDTH, HEIGHT), FPS, IP)
         if clickWindow(WIN, (500, 100), "Make a", "Server"):
             t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
             t1.start()
