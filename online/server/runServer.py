@@ -11,15 +11,15 @@ def threaded_client(conn, player):
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
-            players[player] = data
+            players[player] = Paddle((20, 100), (60, data))
 
             if not data:
                 print("Disconnected")
             else:
                 if player == 1:
-                    reply = {"otherP": players[0], "points": points}
+                    reply = {"otherP": players[0].y, "points": points}
                 else:
-                    reply = {"otherP": players[1], "points": points}
+                    reply = {"otherP": players[1].y, "points": points}
 
             conn.sendall(pickle.dumps(reply))
         except:

@@ -1,4 +1,5 @@
 import socket, pickle
+from Assets.gameObjects import Paddle
 
 class Network:
     def __init__(self, ip):
@@ -10,11 +11,11 @@ class Network:
     
     def getP(self):
         return self.p
-    
+
     def connect(self):
         try:
             self.client.connect(self.addr)
-            return pickle.loads(self.client.recv(2048))
+            return Paddle((20, 100), (60, pickle.loads(self.client.recv(2048))))
         except:
             pass
         

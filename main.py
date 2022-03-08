@@ -1,9 +1,10 @@
+#imports
 import pygame, socket, sys
 from threading import Thread
-import singleplayer.rungame as single
-import multiplayer.client.runClient as client
-import multiplayer.server.runServer as server
-import multiplayer.client.getServer as getServer
+import local.rungame as single
+import online.client.runClient as client
+import online.server.runServer as server
+import online.client.getServer as getServer
 
 #inits
 pygame.init()
@@ -16,9 +17,11 @@ SCORE_FONT = pygame.font.SysFont('comicsans', 40)
 WIDTH, HEIGHT = 900, 500
 FPS = 60
 
+#set window
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 
+#defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):
     x = POS[0]
     y = POS[1]
@@ -50,7 +53,7 @@ def main():
 
         WIN.fill((255, 255, 255))# fills the screen
 
-        if clickWindow(WIN, (100, 100), "Single", "Player"):
+        if clickWindow(WIN, (100, 100), "Local", "Game"):
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         if clickWindow(WIN, (300, 100), "Find a", "Game"):
             IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)

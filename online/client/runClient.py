@@ -1,7 +1,7 @@
 #imports
 import pygame, socket
-from multiplayer.client.network import Network
-from multiplayer.client import getServer
+from online.client.network import Network
+from online.client import getServer
 
 #inits
 pygame.init()

@@ -1,5 +1,5 @@
 import pygame
-from multiplayer.client.inputletters import InputLetters
+from online.client.inputletters import InputLetters
 
 pygame.init()
 pygame.font.init()
