@@ -4,10 +4,6 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-#colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-
 # paddle object
 class Paddle:
     VEL = 5
@@ -16,14 +12,14 @@ class Paddle:
         self.HEIGHT = size[1]
         self.x = POS[0]
         self.y = POS[1]
-    def move(self, directionIsUp):
-        if directionIsUp:
+    def move(self, directionIsUp, HEIGHT):
+        if directionIsUp and self.y - self.VEL > 0:
             self.y -= self.VEL
-        else:
+        elif not(directionIsUp) and self.y + self.VEL + self.HEIGHT < HEIGHT:
             self.y += self.VEL
     def make_it(self, WIN):# makes the paddle
         PADDLE = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
-        pygame.draw.rect(WIN, WHITE, PADDLE)
+        pygame.draw.rect(WIN, (255, 255, 255), PADDLE)
 
 #ball object
 class Ball:
@@ -38,7 +34,7 @@ class Ball:
         self.SCRWIDTH = res[0]
         self.SCRHEIGHT = res[1]
     def make_it(self, WIN):#makes the paddle
-        pygame.draw.circle(WIN, WHITE, (self.x, self.y), self.size)
+        pygame.draw.circle(WIN, (255, 255, 255), (self.x, self.y), self.size)
     def move(self, players):# moves the player
         BALL = pygame.Rect(self.x, self.y, self.size * (self.xVel / 16), self.size)
 

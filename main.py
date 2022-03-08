@@ -1,7 +1,8 @@
-import pygame
+import pygame, socket, sys
+from threading import Thread
 import singleplayer.rungame as single
 import multiplayer.client.runClient as client
-import multiplayer.server.server as server
+import multiplayer.server.runServer as server
 
 #inits
 pygame.init()
@@ -51,9 +52,11 @@ def main():
         if clickWindow(WIN, (100, 100), "Single", "Player"):
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         if clickWindow(WIN, (300, 100), "Find a", "Game"):
-            pass
+            client.main(WIN, (WIDTH, HEIGHT), FPS)
         if clickWindow(WIN, (500, 100), "Make a", "Server"):
-            pass
+            t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
+            t1.start()
+            client.main(WIN, (WIDTH, HEIGHT), FPS, socket.gethostbyname(socket.gethostname()))
 
         pygame.display.update()
     

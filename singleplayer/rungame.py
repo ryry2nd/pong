@@ -23,8 +23,8 @@ def checkWin(WIN, HEIGHT):
         win = 'Player2'
     
     if win:# if there is a win print it out and update the screen
-        WIN.fill(BLACK)
-        WIN.blit(WIN_FONT.render(win + " wins!", 1, WHITE), (0 + 100, HEIGHT//2 - 50))
+        WIN.fill((0, 0, 0))
+        WIN.blit(WIN_FONT.render(win + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
         pygame.display.update()
         pygame.time.delay(3000)
     
@@ -76,14 +76,14 @@ def main(WIN, res, FPS):
         
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
-        if keys_pressed[pygame.K_w] and PLAYER1.y - PLAYER1.VEL > 0:# moves player1 up if in bounds
-            PLAYER1.move(True)
-        if keys_pressed[pygame.K_s] and PLAYER1.y + PLAYER1.VEL + PLAYER1.HEIGHT < HEIGHT:# moves player1 down if in bounds
-            PLAYER1.move(False)
-        if keys_pressed[pygame.K_UP] and PLAYER2.y - PLAYER2.VEL > 0:# moves player2 up if in bounds
-            PLAYER2.move(True)
-        if keys_pressed[pygame.K_DOWN] and PLAYER2.y + PLAYER2.VEL + PLAYER2.HEIGHT < HEIGHT:# moves player2 down if in bounds
-            PLAYER2.move(False)
+        if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
+            PLAYER1.move(True, HEIGHT)
+        if keys_pressed[pygame.K_s]:# moves player1 down if in bounds
+            PLAYER1.move(False, HEIGHT)
+        if keys_pressed[pygame.K_UP]:# moves player2 up if in bounds
+            PLAYER2.move(True, HEIGHT)
+        if keys_pressed[pygame.K_DOWN]:# moves player2 down if in bounds
+            PLAYER2.move(False, HEIGHT)
 
         if BALL.x < 0: # if the ball is on the left increace the score by 1 and restart
             p2Points += 1
@@ -93,11 +93,11 @@ def main(WIN, res, FPS):
             run = False
 
         #renders the fonts
-        p1Score_text = SCORE_FONT.render(str(p1Points), 1, WHITE)
-        p2Score_text = SCORE_FONT.render(str(p2Points), 1, WHITE)
+        p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
+        p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
 
-        WIN.fill(BLACK)# fills the screen
-        pygame.draw.rect(WIN, WHITE, pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
+        WIN.fill((0, 0, 0))# fills the screen
+        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
         BALL.move((PLAYER1, PLAYER2)) #move the ball
 
