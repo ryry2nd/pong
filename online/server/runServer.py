@@ -1,12 +1,17 @@
 import socket, pickle
 from _thread import *
+import threading
 from Assets.gameObjects import Paddle
 
+currentPlayer = 0
 players = []
 points = []
 
 def threaded_client(conn, player):
-    conn.send(pickle.dumps(players[player]))
+    reply = {"yourP": [players[player].x, players[player].y],
+        "otherP": [players[not(player)].x, players[not(player)].y]}
+
+    conn.sendall(pickle.dumps(reply))
     reply = ""
     while True:
         try:
@@ -17,9 +22,13 @@ def threaded_client(conn, player):
                 print("Disconnected")
             else:
                 if player == 1:
-                    reply = {"otherP": players[0].y, "points": points}
+                    reply = {"otherP": (players[0].y), "points": points, "printIp": False}
                 else:
-                    reply = {"otherP": players[1].y, "points": points}
+                    reply = {"otherP": (players[1].y), "points": points, "printIp": False}
+
+                if currentPlayer == 1:
+                    reply["printIp"] = True
+                    
 
             conn.sendall(pickle.dumps(reply))
         except:
@@ -29,7 +38,7 @@ def threaded_client(conn, player):
     conn.close()
 
 def main(RES):
-    global players, points
+    global players, points, currentPlayer
 
     WIDTH = RES[0]
     HEIGHT = RES[1]
@@ -51,9 +60,7 @@ def main(RES):
     players = [Paddle((20, 100), (60, HEIGHT // 2 - 50)), Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))]
     points = [0, 0]
 
-    currentPlayer = 0
-    while True:
+    while currentPlayer <= 2:
         conn, addr = s.accept()
-
         start_new_thread(threaded_client, (conn, currentPlayer))
         currentPlayer += 1

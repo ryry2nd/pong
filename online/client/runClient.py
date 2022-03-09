@@ -1,5 +1,7 @@
 #imports
+from ipaddress import ip_address
 import pygame, socket
+from Assets.gameObjects import Paddle
 from online.client.network import Network
 from online.client import getServer
 
@@ -7,9 +9,13 @@ from online.client import getServer
 pygame.init()
 pygame.font.init()
 
+#constents
+IP_ADDRESS = socket.gethostbyname(socket.gethostname())
+
 #fonts
 SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
+PRINTIP_FONT = pygame.font.SysFont('comicsans', 100)
 
 #main funtion
 def main(WIN, RES, FPS, IP):
@@ -18,16 +24,20 @@ def main(WIN, RES, FPS, IP):
     HEIGHT = RES[1]
 
     n = Network(IP)
-    p = n.getP()
+    players = n.getP()
+    p = players[0]
+    p2 = players[1]
 
     run = True
     restart = True
     clock = pygame.time.Clock()#defines the clock
 
+    printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
+
     while run:# game loop
         clock.tick(FPS)#fps
 
-        atrobutes = n.send(p)
+        atrobutes = n.send(p.y)
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
@@ -57,9 +67,14 @@ def main(WIN, RES, FPS, IP):
         #makes the score
         WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
         WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
+        
+        if atrobutes["printIp"]:
+            WIN.blit(printip_text, (0, 100))
+
+        p2.y = atrobutes["otherP"]
 
         p.make_it(WIN)
-        atrobutes["otherP"].make_it(WIN)
+        p2.make_it(WIN)
 
         pygame.display.update()# updates the display
     

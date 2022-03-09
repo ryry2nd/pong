@@ -13,15 +13,11 @@ class Network:
         return self.p
 
     def connect(self):
-        try:
-            self.client.connect(self.addr)
-            return Paddle((20, 100), (60, pickle.loads(self.client.recv(2048))))
-        except:
-            pass
+        self.client.connect(self.addr)
+        reply = pickle.loads(self.client.recv(2048))
+        return [Paddle((20, 100), (reply["yourP"][0], reply["yourP"][1])),
+            Paddle((20, 100), (reply["otherP"][0], reply["otherP"][1]))]
         
     def send(self, data):
-        try:
-            self.client.send(pickle.dumps(data))
-            return pickle.loads(self.client.recv(2048))
-        except socket.error as e:
-            print(e)
+        self.client.send(pickle.dumps(data))
+        return pickle.loads(self.client.recv(2048))

@@ -26,13 +26,15 @@ def main(WIN, RES, FPS):
                 exit()
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run == False
-                    break
-
-        inputL.addkey(pygame.key.get_pressed())
+                    run = False
+                    return False
+                elif event.key == pygame.K_RETURN:
+                    return inputL.letters
+                else:
+                    inputL.addkey(event.key)
 
         WIN.fill((255, 255, 255))
         WIN.blit(SERVER_TEXT, (0, HEIGHT//2 - 100))
-        inputL.placeText(WIN, (WIDTH//2, HEIGHT//2 - 200))
+        inputL.placeText(WIN, (0, HEIGHT//2 - 200))
 
         pygame.display.update()

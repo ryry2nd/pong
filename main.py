@@ -57,7 +57,8 @@ def main():
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         if clickWindow(WIN, (300, 100), "Find a", "Game"):
             IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)
-            client.main(WIN, (WIDTH, HEIGHT), FPS, IP)
+            if IP:
+                client.main(WIN, (WIDTH, HEIGHT), FPS, IP)
         if clickWindow(WIN, (500, 100), "Make a", "Server"):
             t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
             t1.start()
