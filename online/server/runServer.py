@@ -14,7 +14,6 @@ def threaded_client(conn, player):
     conn.sendall(pickle.dumps(reply))
     reply = ""
     while True:
-        try:
             data = pickle.loads(conn.recv(2048))
             players[player] = Paddle((20, 100), (60, data))
 
@@ -31,8 +30,6 @@ def threaded_client(conn, player):
                     
 
             conn.sendall(pickle.dumps(reply))
-        except:
-            break
 
     print("Lost connection")
     conn.close()
@@ -48,10 +45,7 @@ def main(RES):
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    try:
-        s.bind((server, port))
-    except socket.error as e:
-        str(e)
+    s.bind((server, port))
 
     s.listen(2)
 
