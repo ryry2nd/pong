@@ -1,6 +1,6 @@
 #imports
 import socket, pickle
-from _Thread import *
+from _thread import *
 from Assets.gameCode.gameObjects import Paddle, Ball
 
 #defines globals
