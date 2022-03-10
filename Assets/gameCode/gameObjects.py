@@ -27,12 +27,12 @@ class Ball:
     xVel = 0
     yVel = 0
 
-    def __init__(self, size, POS, res):# init vars
+    def __init__(self, size, POS, RES):# init vars
         self.size = size
         self.x = POS[0]
         self.y = POS[1]
-        self.SCRWIDTH = res[0]
-        self.SCRHEIGHT = res[1]
+        self.SCRWIDTH = RES[0]
+        self.SCRHEIGHT = RES[1]
     def make_it(self, WIN):#makes the paddle
         pygame.draw.circle(WIN, (255, 255, 255), (self.x, self.y), self.size)
     def move(self, players):# moves the player

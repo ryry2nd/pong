@@ -21,17 +21,17 @@ def main(WIN, RES, FPS, IP):
     WIDTH = RES[0]
     HEIGHT = RES[1]
 
-    n = Network(IP)
-    players = n.getP()
-    if players == False:
+    n = Network(IP, RES)
+    objects = n.getP()
+    if objects == False:
         error.main(WIN, "Ip not found")
         return
 
-    p = players[0]
-    p2 = players[1]
+    p = objects[0]
+    p2 = objects[1]
+    ball = objects[2]
 
     run = True
-    restart = True
     clock = pygame.time.Clock()#defines the clock
 
     printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
@@ -80,6 +80,7 @@ def main(WIN, RES, FPS, IP):
 
         p.make_it(WIN)
         p2.make_it(WIN)
+        ball.make_it(WIN)
 
         pygame.display.update()# updates the display
 

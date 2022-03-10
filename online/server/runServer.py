@@ -1,14 +1,17 @@
 import socket, pickle
 from _thread import *
-from Assets.gameCode.gameObjects import Paddle
+from Assets.gameCode.gameObjects import Paddle, Ball
 
 timedOut = False
 numPlayers = 0
+players = []
+ball = None
 points = []
 
 def threaded_client(conn, player):
-    reply = {"yourP": [players[player].x, players[player].y],
-        "otherP": [players[not(player)].x, players[not(player)].y]}
+    reply = {"yourP": (players[player].x, players[player].y),
+        "otherP": (players[not(player)].x, players[not(player)].y),
+        "ballPos": (ball.x, ball.y)}
 
     conn.sendall(pickle.dumps(reply))
     reply = ""
@@ -42,7 +45,7 @@ def threaded_client(conn, player):
     conn.close()
 
 def main(RES):
-    global players, points, numPlayers, timedOut
+    global players, points, numPlayers, timedOut, ball
 
     WIDTH = RES[0]
     HEIGHT = RES[1]
@@ -62,6 +65,7 @@ def main(RES):
     print("Waiting for a connection, Server Started")
 
     players = [Paddle((20, 100), (60, HEIGHT // 2 - 50)), Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))]
+    ball = Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
     points = [0, 0]
     timedOut = False
     numPlayers = 0
