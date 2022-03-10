@@ -1,9 +1,7 @@
 #imports
-from ipaddress import ip_address
 import pygame, socket
-from Assets.gameObjects import Paddle
 from online.client.network import Network
-from online.client import getServer
+from Assets.gameCode.errors import error
 
 #inits
 pygame.init()
@@ -25,6 +23,10 @@ def main(WIN, RES, FPS, IP):
 
     n = Network(IP)
     players = n.getP()
+    if players == False:
+        error.main(WIN, "Ip not found")
+        return
+
     p = players[0]
     p2 = players[1]
 
@@ -47,9 +49,12 @@ def main(WIN, RES, FPS, IP):
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run = False
-                    restart = False
-        
+                    return
+
+        if atrobutes["stop"]:
+            error.main(WIN, "Server timed out")
+            return
+            
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
         if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
@@ -77,6 +82,5 @@ def main(WIN, RES, FPS, IP):
         p2.make_it(WIN)
 
         pygame.display.update()# updates the display
-    
-    if restart:# if it is being restarted, restart
-        main(WIN, (WIDTH, HEIGHT), FPS, IP)
+
+    main(WIN, RES, FPS, IP)

@@ -26,7 +26,6 @@ def main(WIN, RES, FPS):
                 exit()
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run = False
                     return False
                 elif event.key == pygame.K_RETURN:
                     return inputL.letters

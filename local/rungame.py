@@ -1,6 +1,6 @@
 #imports
 import pygame, random
-from Assets.gameObjects import *
+from Assets.gameCode.gameObjects import *
 
 #inits
 pygame.init()
@@ -36,13 +36,13 @@ def restartPoints():
 
 
 #main funtion
-def main(WIN, res, FPS):
+def main(WIN, RES, FPS):
     #init vars
     global p1Points, p2Points
 
     #def width and height
-    WIDTH = res[0]
-    HEIGHT = res[1]
+    WIDTH = RES[0]
+    HEIGHT = RES[1]
 
     #init objects
     PLAYER1 = Paddle((20, 100), (60, HEIGHT // 2 - 50))
@@ -50,7 +50,6 @@ def main(WIN, res, FPS):
     BALL = Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
 
     run = True
-    restart = True
     clock = pygame.time.Clock()#defines the clock
 
     if p1Points > p2Points:
@@ -71,8 +70,8 @@ def main(WIN, res, FPS):
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run = False
-                    restart = False
+                    restartPoints()
+                    return
         
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
@@ -113,10 +112,7 @@ def main(WIN, res, FPS):
         pygame.display.update()# updates the display
         
         if checkWin(WIN, HEIGHT):# checkes if there is a winner
-            run = False
-            restart = False
+            restartPoints()
+            return
     
-    if restart:# if it is being restarted, restart
-        main(WIN, (WIDTH, HEIGHT), FPS)
-    else:
-        restartPoints()
+    main(WIN, (WIDTH, HEIGHT), FPS)

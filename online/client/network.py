@@ -1,5 +1,5 @@
 import socket, pickle
-from Assets.gameObjects import Paddle
+from Assets.gameCode.gameObjects import Paddle
 
 class Network:
     def __init__(self, ip):
@@ -13,7 +13,10 @@ class Network:
         return self.p
 
     def connect(self):
-        self.client.connect(self.addr)
+        try:
+            self.client.connect(self.addr)
+        except socket.gaierror:
+            return False
         reply = pickle.loads(self.client.recv(2048))
         return [Paddle((20, 100), (reply["yourP"][0], reply["yourP"][1])),
             Paddle((20, 100), (reply["otherP"][0], reply["otherP"][1]))]
