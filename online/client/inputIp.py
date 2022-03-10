@@ -1,22 +1,32 @@
+#imports
 import pygame
+
+#init
 pygame.init()
 pygame.font.init()
 
 #inputletters
 INPUT_FONT = pygame.font.SysFont('comicsans', 100)
 
-class InputLetters:
-    letters = ""
+#defines the input letters class
+class InputIp:
+    ip = ""# defines the ip string
+    #init
     def __init__(self, res):
+        #defines the resolution
         self.WIDTH = res[0]
         self.HEIGHT = res[1]
+    #places the text on the screen
     def placeText(self, WIN, RES):
-        return WIN.blit(INPUT_FONT.render(str(self.letters), 
+        WIN.blit(INPUT_FONT.render(str(self.letters), 
             1, (0, 0, 0)), RES)
+    #adds a key
     def addkey(self, keys):
+        # if backspace is pressed remove the last number
         if keys == pygame.K_BACKSPACE and self.letters != []:
             self.letters = self.letters[0:len(self.letters)-1]
         else:
+            #adds a number or period if it is pressed
             if keys == pygame.K_0:
                 self.letters += "0"
             elif keys == pygame.K_1:

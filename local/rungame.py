@@ -1,6 +1,6 @@
 #imports
 import pygame, random
-from Assets.gameCode.gameObjects import *
+from Assets.gameCode.gameObjects import Paddle, Ball
 
 #inits
 pygame.init()
@@ -115,4 +115,4 @@ def main(WIN, RES, FPS):
             restartPoints()
             return
     
-    main(WIN, (WIDTH, HEIGHT), FPS)
+    main(WIN, (WIDTH, HEIGHT), FPS)#restarts

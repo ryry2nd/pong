@@ -21,24 +21,31 @@ def main(WIN, RES, FPS, IP):
     WIDTH = RES[0]
     HEIGHT = RES[1]
 
+    #inits Network
     n = Network(IP, RES)
-    objects = n.getP()
-    if objects == False:
-        error.main(WIN, "Ip not found")
-        return
 
+    #gets the objects
+    objects = n.getP()
+    if objects == False:# if it returned false show the ip not found screen
+        error.main(WIN, "Ip not found")
+        return # goes back to the home screen
+
+    #puts all of the objects as there own vareable
     p = objects[0]
     p2 = objects[1]
     ball = objects[2]
 
+    #init vars
     run = True
     clock = pygame.time.Clock()#defines the clock
 
+    #renders when it needs to print the ip
     printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
 
     while run:# game loop
-        clock.tick(FPS)#fps
+        clock.tick(FPS)
 
+        #sends the y position and returns the atrobutes
         atrobutes = n.send(p.y)
 
         for event in pygame.event.get():#loops through the events
@@ -51,6 +58,7 @@ def main(WIN, RES, FPS, IP):
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return
 
+        # if the server timed out, print the time out screen and quit
         if atrobutes["stop"]:
             error.main(WIN, "Server timed out")
             return
@@ -72,16 +80,18 @@ def main(WIN, RES, FPS, IP):
         #makes the score
         WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
         WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
-        
+
+        # if the server wants the client to show the ip, show the ip
         if atrobutes["printIp"]:
             WIN.blit(printip_text, (0, 100))
 
-        p2.y = atrobutes["otherP"]
+        p2.y = atrobutes["otherP"]# sets the y position of the pattle
 
+        #makes the objects
         p.make_it(WIN)
         p2.make_it(WIN)
         ball.make_it(WIN)
 
         pygame.display.update()# updates the display
 
-    main(WIN, RES, FPS, IP)
+    main(WIN, RES, FPS, IP)#restarts

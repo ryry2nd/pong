@@ -1,3 +1,4 @@
+#imports
 import pygame
 
 #inits
@@ -6,18 +7,23 @@ pygame.font.init()
 
 # paddle object
 class Paddle:
-    VEL = 6
-    def __init__(self, size, POS):#initualise the vars
-        self.WIDTH = size[0]
-        self.HEIGHT = size[1]
-        self.x = POS[0]
-        self.y = POS[1]
+    VEL = 6# this is the velocity of the paddle
+    #initualise the vars
+    def __init__(self, size, POS):
+        self.WIDTH = size[0]#defines the width
+        self.HEIGHT = size[1]#defines the height
+        self.x = POS[0]#defines the xpos
+        self.y = POS[1]#defines the ypos
+    #moves the paddle
     def move(self, directionIsUp, HEIGHT):
+        # runs when it is going up and in bounds
         if directionIsUp and self.y - self.VEL > 0:
-            self.y -= self.VEL
+            self.y -= self.VEL# moves the paddle
+        #runs when it is going down and is in bounds
         elif not(directionIsUp) and self.y + self.VEL + self.HEIGHT < HEIGHT:
-            self.y += self.VEL
-    def make_it(self, WIN):# makes the paddle
+            self.y += self.VEL#moves the paddle
+    # makes the paddle
+    def make_it(self, WIN):
         PADDLE = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
         pygame.draw.rect(WIN, (255, 255, 255), PADDLE)
 
@@ -27,16 +33,22 @@ class Ball:
     xVel = 0
     yVel = 0
 
-    def __init__(self, size, POS, RES):# init vars
-        self.size = size
-        self.x = POS[0]
-        self.y = POS[1]
+    # init vars
+    def __init__(self, size, POS, RES):
+        self.size = size#defines the size
+        self.x = POS[0]#defines the xpos
+        self.y = POS[1]#defines the ypos
+        #defines the screen res
         self.SCRWIDTH = RES[0]
         self.SCRHEIGHT = RES[1]
-    def make_it(self, WIN):#makes the paddle
-        pygame.draw.circle(WIN, (255, 255, 255), (self.x, self.y), self.size)
-    def move(self, players):# moves the player
-        BALL = pygame.Rect(self.x, self.y, self.size * (self.xVel / 16), self.size)
+    #makes the ball
+    def make_it(self, WIN):
+        pygame.draw.circle(WIN, (255, 255, 255),
+            (self.x, self.y), self.size)
+    # moves the ball
+    def move(self, players):
+        BALL = pygame.Rect(self.x, self.y,# makes the balls colision
+            self.size * (self.xVel / 16), self.size)#the faster it goes the larger the colision
 
         # bounces off the walls
         if self.y + self.yVel <= 0 or self.y + self.yVel >= self.SCRHEIGHT - self.size:
