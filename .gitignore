@@ -131,3 +131,5 @@ dmypy.json
 # my stuff
 .vscode
 .replit
+poetry.lock
+pyproject.toml

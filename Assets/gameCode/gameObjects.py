@@ -6,7 +6,7 @@ pygame.font.init()
 
 # paddle object
 class Paddle:
-    VEL = 5
+    VEL = 6
     def __init__(self, size, POS):#initualise the vars
         self.WIDTH = size[0]
         self.HEIGHT = size[1]
