@@ -42,6 +42,11 @@ def main(WIN, RES, FPS, IP):
     #renders when it needs to print the ip
     printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
 
+    WIN.fill((0, 0, 0))# fills the screen
+    WIN.blit(printip_text, (0, 100))
+    pygame.display.update()
+    pygame.time.delay(5000)
+
     while run:# game loop
         clock.tick(FPS)
 
@@ -59,9 +64,9 @@ def main(WIN, RES, FPS, IP):
                     return
 
         # if the server timed out, print the time out screen and quit
-        if atrobutes["stop"]:
-            error.main(WIN, "Server timed out")
-            return
+        #if atrobutes["stop"]:
+        #    error.main(WIN, "Server timed out")
+        #    return
             
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
@@ -80,10 +85,6 @@ def main(WIN, RES, FPS, IP):
         #makes the score
         WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
         WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
-
-        # if the server wants the client to show the ip, show the ip
-        if atrobutes["printIp"]:
-            WIN.blit(printip_text, (0, 100))
 
         p2.y = atrobutes["otherP"]# sets the y position of the pattle
 
