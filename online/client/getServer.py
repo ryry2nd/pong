@@ -34,7 +34,7 @@ def main(WIN, RES, FPS):
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return False
                 elif event.key == pygame.K_RETURN:# if return is pressed return the letters
-                    return inputL.letters
+                    return inputL.ip
                 else:#otherwise add the key
                     inputL.addkey(event.key)
 

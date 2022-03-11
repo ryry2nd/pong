@@ -18,34 +18,34 @@ class InputIp:
         self.HEIGHT = res[1]
     #places the text on the screen
     def placeText(self, WIN, RES):
-        WIN.blit(INPUT_FONT.render(str(self.letters), 
+        WIN.blit(INPUT_FONT.render(str(self.ip), 
             1, (0, 0, 0)), RES)
     #adds a key
     def addkey(self, keys):
         # if backspace is pressed remove the last number
-        if keys == pygame.K_BACKSPACE and self.letters != []:
-            self.letters = self.letters[0:len(self.letters)-1]
+        if keys == pygame.K_BACKSPACE and self.ip != []:
+            self.ip = self.ip[0:len(self.ip)-1]
         else:
             #adds a number or period if it is pressed
             if keys == pygame.K_0:
-                self.letters += "0"
+                self.ip += "0"
             elif keys == pygame.K_1:
-                self.letters += "1"
+                self.ip += "1"
             elif keys == pygame.K_2:
-                self.letters += "2"
+                self.ip += "2"
             elif keys == pygame.K_3:
-                self.letters += "3"
+                self.ip += "3"
             elif keys == pygame.K_4:
-                self.letters += "4"
+                self.ip += "4"
             elif keys == pygame.K_5:
-                self.letters += "5"
+                self.ip += "5"
             elif keys == pygame.K_6:
-                self.letters += "6"
+                self.ip += "6"
             elif keys == pygame.K_7:
-                self.letters += "7"
+                self.ip += "7"
             elif keys == pygame.K_8:
-                self.letters += "8"
+                self.ip += "8"
             elif keys == pygame.K_9:
-                self.letters += "9"
+                self.ip += "9"
             elif keys == pygame.K_PERIOD:
-                self.letters += "."
+                self.ip += "."
