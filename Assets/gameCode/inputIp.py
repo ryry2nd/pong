@@ -11,9 +11,10 @@ pygame.font.init()
 #inputletters
 INPUT_FONT = pygame.font.SysFont('comicsans', 100)
 
+ip = "192.168."# defines the ip string
+
 #defines the input letters class
 class InputIp:
-    ip = "192.168."# defines the ip string
     #init
     def __init__(self, res):
         #defines the resolution
@@ -21,34 +22,35 @@ class InputIp:
         self.HEIGHT = res[1]
     #places the text on the screen
     def placeText(self, WIN, RES):
-        WIN.blit(INPUT_FONT.render(str(self.ip), 
+        WIN.blit(INPUT_FONT.render(ip, 
             1, (255, 255, 255)), RES)
     #adds a key
     def addkey(self, keys):
+        global ip
         # if backspace is pressed remove the last number
-        if keys == pygame.K_BACKSPACE and self.ip != []:
-            self.ip = self.ip[0:len(self.ip)-1]
+        if keys == pygame.K_BACKSPACE and ip != []:
+            ip = ip[0:len(ip)-1]
         else:
             #adds a number or period if it is pressed
             if keys == pygame.K_0:
-                self.ip += "0"
+                ip += "0"
             elif keys == pygame.K_1:
-                self.ip += "1"
+                ip += "1"
             elif keys == pygame.K_2:
-                self.ip += "2"
+                ip += "2"
             elif keys == pygame.K_3:
-                self.ip += "3"
+                ip += "3"
             elif keys == pygame.K_4:
-                self.ip += "4"
+                ip += "4"
             elif keys == pygame.K_5:
-                self.ip += "5"
+                ip += "5"
             elif keys == pygame.K_6:
-                self.ip += "6"
+                ip += "6"
             elif keys == pygame.K_7:
-                self.ip += "7"
+                ip += "7"
             elif keys == pygame.K_8:
-                self.ip += "8"
+                ip += "8"
             elif keys == pygame.K_9:
-                self.ip += "9"
+                ip += "9"
             elif keys == pygame.K_PERIOD:
-                self.ip += "."
+                ip += "."

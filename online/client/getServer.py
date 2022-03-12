@@ -3,7 +3,7 @@ gets the server
 """
 #imports
 import pygame
-from Assets.gameCode.inputIp import InputIp
+from Assets.gameCode import inputIp
 
 #inits
 pygame.init()
@@ -15,7 +15,7 @@ SERVER_TEXT = pygame.font.SysFont('comicsans', 50).render(
 
 #defines main funtion
 def main(WIN, RES, FPS):
-    inputL = InputIp(RES)#inits the ip class
+    inputL = inputIp.InputIp(RES)#inits the ip class
 
     #defines the height
     HEIGHT = RES[1]
@@ -37,7 +37,7 @@ def main(WIN, RES, FPS):
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return False
                 elif event.key == pygame.K_RETURN:# if return is pressed return the letters
-                    return inputL.ip
+                    return inputIp.ip
                 else:#otherwise add the key
                     inputL.addkey(event.key)
 
