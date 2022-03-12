@@ -1,3 +1,6 @@
+"""
+defines the network class
+"""
 #imports
 import socket, pickle
 

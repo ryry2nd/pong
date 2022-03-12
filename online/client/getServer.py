@@ -1,6 +1,9 @@
+"""
+gets the server
+"""
 #imports
 import pygame
-from online.client.inputIp import InputIp
+from Assets.gameCode.inputIp import InputIp
 
 #inits
 pygame.init()
@@ -23,7 +26,7 @@ def main(WIN, RES, FPS):
 
     #game loop
     while run:
-        clock.tick(FPS)
+        clock.tick(FPS)#fps
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit

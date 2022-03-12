@@ -1,3 +1,6 @@
+"""
+runs the client code
+"""
 #imports
 import pygame, socket
 from online.client.network import Network
@@ -16,6 +19,7 @@ SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
 PRINTIP_FONT = pygame.font.SysFont('comicsans', 100)
 
+#prints who won
 def win(WIN, winner, HEIGHT):
     WIN.fill((0, 0, 0))
     WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
@@ -38,40 +42,44 @@ def main(WIN, RES, FPS, IP):
         error.main(WIN, "Ip not found")
         return # goes back to the home screen
     
+    #gets the x position of both players
     p1XPos = initObject[0]
     p2XPos = initObject[1]
 
     #init vars
     run = True
-    connecting = (p1XPos == 60)
+    connecting = (p1XPos == 60)# is true if it is player 1
     clock = pygame.time.Clock()#defines the clock
 
     #renders when it needs to print the ip
     printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
 
+    #the connection screen
     while connecting:
-        clock.tick(FPS)
+        clock.tick(FPS)#fps
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
-                n.send(True)
+                n.send(True)#tells the server to quit
                 pygame.quit()
                 exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    n.send(True)
+                    n.send(True)#tells the server to quit
                     return
 
-        WIN.fill((0, 0, 0))# fills the screen
+        #makes the screen
+        WIN.fill((0, 0, 0))
         WIN.blit(printip_text, (0, 100))
         pygame.display.update()
 
+        #askes if player 2 has joined yet
         connecting = n.send()
 
     while run:# game loop
-        moveUp = None
-        clock.tick(FPS)
+        moveUp = None#restarts the move Up vareable
+        clock.tick(FPS)#fps
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
@@ -91,14 +99,17 @@ def main(WIN, RES, FPS, IP):
         elif keys_pressed[pygame.K_s]:# moves player1 down if in bounds
             moveUp = False
 
-        atrobutes = n.send(moveUp)
+        atrobutes = n.send(moveUp)# sends if it is moveing up and receves the data
 
+        #if it is 1 then player 1 wins
         if atrobutes == 1:
             win(WIN, "player1", HEIGHT)
             break
+        # if it is 2 then player 2 wins
         elif atrobutes == 2:
             win(WIN, "player2", HEIGHT)
             break
+        # if it is exit then exit
         elif atrobutes == "exit":
             break
 
@@ -106,7 +117,8 @@ def main(WIN, RES, FPS, IP):
         p1Score_text = SCORE_FONT.render(str(atrobutes["points"][0]), 1, (255, 255, 255))
         p2Score_text = SCORE_FONT.render(str(atrobutes["points"][1]), 1, (255, 255, 255))
 
-        WIN.fill((0, 0, 0))# fills the screen
+        #sets up the screen
+        WIN.fill((0, 0, 0))
         pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
         #makes the score

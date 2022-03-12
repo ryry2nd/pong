@@ -1,3 +1,6 @@
+"""
+defines the input letters class
+"""
 #imports
 import pygame
 

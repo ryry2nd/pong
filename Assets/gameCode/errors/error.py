@@ -1,3 +1,6 @@
+"""
+prints the error given
+"""
 #imports
 import pygame
 

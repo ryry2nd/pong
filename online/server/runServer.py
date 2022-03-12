@@ -1,24 +1,30 @@
+"""
+starts the server
+"""
 #imports
 import socket, pickle, random
 from threading import Thread
 from online import getLocalIp
 from Assets.gameCode.gameObjects import Paddle, Ball
 
+#is only true if it is connecting
 connecting = True
 
+# the waiting thread
 def waiting(conn, s):
     while connecting:
-        if pickle.loads(conn.recv(2048)):
-            conn.sendall(pickle.dumps(None))
-            s.close()
+        if pickle.loads(conn.recv(2048)):# is True the reply is True
+            conn.sendall(pickle.dumps(None))# sends the client nothing
+            s.close()# closes the server
             exit()
-        conn.sendall(pickle.dumps(True))
-    conn.sendall(pickle.dumps(False))
+        conn.sendall(pickle.dumps(True))# sends the client True because it is still connecting
+    conn.sendall(pickle.dumps(False))# sends it False because it is done connecting
 
 
 #defines the main funtion
 def main(RES):
-    global connecting
+    global connecting# get global
+
     #defines the res
     WIDTH = RES[0]
     HEIGHT = RES[1]
@@ -30,15 +36,14 @@ def main(RES):
     #defines the socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    #tryes to bind the server to the port
+    #starts the server
     s.bind((server, port))
-
     s.listen(2)
 
     #inits the objects
-    objects = [Paddle((20, 100), (60, HEIGHT // 2 - 50)),
-        Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50)),
-        Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]
+    objects = [Paddle((20, 100), (60, HEIGHT // 2 - 50)),#player 1
+        Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50)),# player 2
+        Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]# ball
     
     #sets the vars
     connecting = True
@@ -46,23 +51,29 @@ def main(RES):
     points = [0, 0]
     run = True
     
+    #connects the vareables
     for i in range(2):
-        try:
+        try:# if the s socket is closed, quit
             conn, addr = s.accept()# gets the client
         except OSError:
             exit()
-        playerConn.append(conn)
-        #sends the reply
-        if i == 0:
-            playerConn[0].sendall(pickle.dumps((60, WIDTH - 70)))
-            Thread(target=waiting, args=(playerConn[0], s, )).start()
-        else:
-            playerConn[1].sendall(pickle.dumps((WIDTH - 70, 60)))
-            connecting = False
 
+        playerConn.append(conn)# appends the players connection
+        
+        #sends the reply
+        if i == 0:# is true when player 1
+            playerConn[0].sendall(pickle.dumps((60, WIDTH - 70)))# sends where it is and the other player
+            Thread(target=waiting, args=(playerConn[0], s, )).start()# starts the connection thread
+        else:
+            playerConn[1].sendall(pickle.dumps((WIDTH - 70, 60)))# sends where it is and the other player
+            connecting = False# stops the connection
+
+    # stops searching
     s.close()
 
+    #game loop
     while run:
+        #resets the vars
         runFrame = True
         objects[0].y = HEIGHT // 2 - 50
         objects[1].y = HEIGHT // 2 - 50
@@ -70,6 +81,7 @@ def main(RES):
         objects[2].y = HEIGHT // 2 - 10
         objects[2].yVel = 0
 
+        #says where the ball goes
         if points[0] > points[1]:
             objects[2].xVel = 3
         elif points[0] < points[1]:
@@ -77,24 +89,26 @@ def main(RES):
         else:
             objects[2].xVel = random.choice([-3,3])# default vel
 
+        # loops every frame
         while runFrame:
             try:
                 p1 = pickle.loads(playerConn[0].recv(2048))
-                if p1 != None:
+                if p1 != None:# if it is not getting nothing, move the paddle
                     objects[0].move(p1, HEIGHT)
-            except EOFError:
+            except EOFError:# if it is getting that error, exit
                 playerConn[1].recv(2048)
                 playerConn[1].sendall(pickle.dumps("exit"))
                 break
             try:
                 p2 = pickle.loads(playerConn[1].recv(2048))
-                if p2 != None:
+                if p2 != None:# if it is not getting nothing, move the paddle
                     objects[1].move(p2, HEIGHT)
-            except EOFError:
+            except EOFError:# if it is getting that error, exit
                 playerConn[0].recv(2048)
                 playerConn[0].sendall(pickle.dumps("exit"))
                 break
 
+            # defines the replys
             replyp1 = {"otherP": (objects[1].y),"yourP": (objects[0].y), "points": points, "ball": (objects[2].x, objects[2].y)}
             replyp2 = {"otherP": (objects[0].y),"yourP": (objects[1].y), "points": points, "ball": (objects[2].x, objects[2].y)}
 
@@ -105,23 +119,27 @@ def main(RES):
                 points[0] += 1
                 runFrame = False
 
-            objects[2].move((objects[0], objects[1]))
+            objects[2].move((objects[0], objects[1]))# move the ball
 
+            #sends the replys
             playerConn[0].sendall(pickle.dumps(replyp1))
             playerConn[1].sendall(pickle.dumps(replyp2))
         
-        if points[0] >= 7:
+        if points[0] >= 7:# if player1's points are >= 7 then player 1 wins
             playerConn[0].recv(2048)
             playerConn[1].recv(2048)
+            #tells the clients who won
             playerConn[0].sendall(pickle.dumps(1))
             playerConn[1].sendall(pickle.dumps(1))
             run = False
-        elif points[1] >= 7:
+        elif points[1] >= 7:# if player2's points are >= 7 then player 2 wins
             playerConn[0].recv(2048)
             playerConn[1].recv(2048)
+            #tells the clients who won
             playerConn[0].sendall(pickle.dumps(2))
             playerConn[1].sendall(pickle.dumps(2))
             run = False
     
+    # closes the connection
     playerConn[0].close()
     playerConn[1].close()

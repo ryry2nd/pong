@@ -1,5 +1,8 @@
+"""
+loads the gui
+"""
 #imports
-import pygame, socket, os
+import pygame, os
 from threading import Thread
 import local.rungame as single
 from online import getLocalIp
@@ -25,6 +28,7 @@ pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'ic
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):
+    # gets the x and y position
     x = POS[0]
     y = POS[1]
 

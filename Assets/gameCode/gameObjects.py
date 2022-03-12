@@ -1,3 +1,6 @@
+"""
+defines the ball and paddle classes
+"""
 #imports
 import pygame
 

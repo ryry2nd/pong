@@ -1,3 +1,6 @@
+"""
+runs the local game
+"""
 #imports
 import pygame, random
 from Assets.gameCode.gameObjects import Paddle, Ball
@@ -30,6 +33,7 @@ def checkWin(WIN, HEIGHT):
     
     return win #returns the winner
 
+#restarts the points
 def restartPoints():
     global p1Points, p2Points
     p1Points, p2Points = 0, 0
@@ -37,7 +41,7 @@ def restartPoints():
 
 #main funtion
 def main(WIN, RES, FPS):
-    #init vars
+    #get globals
     global p1Points, p2Points
 
     #def width and height
@@ -49,15 +53,17 @@ def main(WIN, RES, FPS):
     PLAYER2 = Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))
     BALL = Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
 
+    #init vars
     run = True
     clock = pygame.time.Clock()#defines the clock
 
+    #sets where the ball goes first
     if p1Points > p2Points:
         BALL.xVel = 3
     elif p1Points < p2Points:
         BALL.xVel = -3
     else:
-        BALL.xVel = random.choice([-3,3])# default vel
+        BALL.xVel = random.choice([-3,3])
 
     while run:# game loop
         clock.tick(FPS)#fps
@@ -95,7 +101,8 @@ def main(WIN, RES, FPS):
         p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
         p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
 
-        WIN.fill((0, 0, 0))# fills the screen
+        #makes the background
+        WIN.fill((0, 0, 0))
         pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
         BALL.move((PLAYER1, PLAYER2)) #move the ball
