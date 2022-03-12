@@ -11,7 +11,7 @@ pygame.font.init()
 # paddle object
 class Paddle:
     VEL = 6# this is the velocity of the paddle
-    #initualise the vars
+    #initialise the vars
     def __init__(self, size, POS):
         self.WIDTH = size[0]#defines the width
         self.HEIGHT = size[1]#defines the height

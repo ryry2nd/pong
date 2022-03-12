@@ -13,7 +13,7 @@ pygame.font.init()
 SERVER_TEXT = pygame.font.SysFont('comicsans', 50).render(
     str("Chose the IP of the player you want to join"), 1, (255, 255, 255))
 
-#defines main funtion
+#defines main function
 def main(WIN, RES, FPS):
     inputL = inputIp.InputIp(RES)#inits the ip class
 

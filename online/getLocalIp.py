@@ -4,7 +4,7 @@ gets the local ip
 #imports socket
 import socket
 
-#the main funtion
+#the main function
 def main():
     # makes a socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

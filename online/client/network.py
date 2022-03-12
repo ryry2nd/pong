@@ -28,7 +28,7 @@ class Network:
 
     #connects to the server
     def connect(self):
-        # if it can connect conect, otherwise return false
+        # if it can connect connect, otherwise return false
         try:
             self.client.connect(self.addr)
         except socket.gaierror:
@@ -37,13 +37,13 @@ class Network:
         #defines the reply from the server
         reply = pickle.loads(self.client.recv(32))
 
-        #returns all of the initualised objects
+        #returns all of the initialise objects
         return reply
 
-    #defines the send funtion
+    #defines the send function
     def send(self, data=False):
         #sends the data
         self.client.send(pickle.dumps(data))
 
-        #recieves other data
+        #receives other data
         return pickle.loads(self.client.recv(256))
