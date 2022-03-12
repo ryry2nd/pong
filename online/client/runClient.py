@@ -82,6 +82,9 @@ def main(WIN, RES, FPS, IP):
         elif atrobutes == 2:
             win(WIN, "player2", HEIGHT)
             break
+        elif atrobutes == "exit":
+            print("hi")
+            break
         # if the server timed out, print the time out screen and quit
         #if atrobutes["stop"]:
         #    error.main(WIN, "Server timed out")

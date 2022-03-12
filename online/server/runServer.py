@@ -61,11 +61,17 @@ def main(RES):
                 p1 = pickle.loads(playerConn[0].recv(2048))
                 if p1 != None:
                     objects[0].move(p1, HEIGHT)
+            except EOFError:
+                #playerConn[1].recv(2048)
+                #playerConn[1].sendall(pickle.dumps("exit"))
+                break
+            try:
                 p2 = pickle.loads(playerConn[1].recv(2048))
                 if p2 != None:
                     objects[1].move(p2, HEIGHT)
             except EOFError:
-                run = False
+                playerConn[0].recv(2048)
+                playerConn[0].sendall(pickle.dumps("exit"))
                 break
 
             replyp1 = {"otherP": (objects[1].y),"yourP": (objects[0].y), "points": points, "ball": (objects[2].x, objects[2].y)}
