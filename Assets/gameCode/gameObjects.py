@@ -56,7 +56,7 @@ class Ball:
         
         for player in players:# loops through the paddles
             if BALL.colliderect(pygame.Rect(player.x, player.y, player.WIDTH, player.HEIGHT)):# runs when there is a colision
-                self.xVel = -self.xVel# reverses the balls x vel
+                self.xVel= -self.xVel# reverses the balls x vel
                 self.yVel = -((((player.y + (player.HEIGHT // 2)) - self.y) - 10) // 10)# sets the y level based on where it hits the paddle
 
                 # make the ball faster

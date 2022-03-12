@@ -1,6 +1,5 @@
 #imports
 import socket, pickle
-from Assets.gameCode.gameObjects import Paddle, Ball
 
 #defines Network class
 class Network:
@@ -36,9 +35,7 @@ class Network:
         reply = pickle.loads(self.client.recv(2048))
 
         #returns all of the initualised objects
-        return [Paddle((20, 100), (reply["yourP"][0], reply["yourP"][1])),
-            Paddle((20, 100), (reply["otherP"][0], reply["otherP"][1])),
-            Ball(20, (reply["ballPos"][0], reply["ballPos"][1]), (self.WIDTH, self.HEIGHT))]
+        return reply
 
     #defines the send funtion
     def send(self, data):

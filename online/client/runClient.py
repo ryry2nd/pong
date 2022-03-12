@@ -15,6 +15,13 @@ SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
 PRINTIP_FONT = pygame.font.SysFont('comicsans', 100)
 
+def win(WIN, winner, HEIGHT):
+    WIN.fill((0, 0, 0))
+    WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
+    pygame.display.update()
+    pygame.time.delay(3000)
+
+
 #main funtion
 def main(WIN, RES, FPS, IP):
     #def width and height
@@ -25,15 +32,13 @@ def main(WIN, RES, FPS, IP):
     n = Network(IP, RES)
 
     #gets the objects
-    objects = n.getP()
-    if objects == False:# if it returned false show the ip not found screen
+    initObject = n.getP()
+    if not initObject:# if it returned false show the ip not found screen
         error.main(WIN, "Ip not found")
         return # goes back to the home screen
-
-    #puts all of the objects as there own vareable
-    p = objects[0]
-    p2 = objects[1]
-    ball = objects[2]
+    
+    p1XPos = initObject[0]
+    p2XPos = initObject[1]
 
     #init vars
     run = True
@@ -48,10 +53,8 @@ def main(WIN, RES, FPS, IP):
     pygame.time.delay(5000)
 
     while run:# game loop
+        moveUp = None
         clock.tick(FPS)
-
-        #sends the y position and returns the atrobutes
-        atrobutes = n.send(p.y)
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
@@ -63,17 +66,26 @@ def main(WIN, RES, FPS, IP):
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return
 
+        #sends the y position and returns the atrobutes
+        keys_pressed = pygame.key.get_pressed()# gets all the keys
+        
+        if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
+            moveUp = True
+        elif keys_pressed[pygame.K_s]:# moves player1 down if in bounds
+            moveUp = False
+
+        atrobutes = n.send(moveUp)
+
+        if atrobutes == 1:
+            win(WIN, "player1", HEIGHT)
+            break
+        elif atrobutes == 2:
+            win(WIN, "player2", HEIGHT)
+            break
         # if the server timed out, print the time out screen and quit
         #if atrobutes["stop"]:
         #    error.main(WIN, "Server timed out")
         #    return
-            
-        keys_pressed = pygame.key.get_pressed()# gets all the keys
-        
-        if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
-            p.move(True, HEIGHT)
-        if keys_pressed[pygame.K_s]:# moves player1 down if in bounds
-            p.move(False, HEIGHT)
 
         #renders the fonts
         p1Score_text = SCORE_FONT.render(str(atrobutes["points"][0]), 1, (255, 255, 255))
@@ -86,13 +98,9 @@ def main(WIN, RES, FPS, IP):
         WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
         WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
 
-        p2.y = atrobutes["otherP"]# sets the y position of the pattle
-
         #makes the objects
-        p.make_it(WIN)
-        p2.make_it(WIN)
-        ball.make_it(WIN)
+        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p1XPos, atrobutes["yourP"], 20, 100))
+        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p2XPos, atrobutes["otherP"], 20, 100))
+        pygame.draw.circle(WIN, (255, 255, 255), (atrobutes["ball"][0], atrobutes["ball"][1]), 20)
 
         pygame.display.update()# updates the display
-
-    main(WIN, RES, FPS, IP)#restarts
