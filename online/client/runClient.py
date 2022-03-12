@@ -15,9 +15,9 @@ pygame.font.init()
 IP_ADDRESS = getLocalIp.main()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont('comicsans', 100)
-WIN_FONT = pygame.font.SysFont('comicsans', 100)
-PRINT_IP_FONT = pygame.font.SysFont('comicsans', 100)
+SCORE_FONT = pygame.font.SysFont('timesnewroman', 100)
+WIN_FONT = pygame.font.SysFont('timesnewroman', 100)
+PRINT_IP_FONT = pygame.font.SysFont('timesnewroman', 75)
 
 #prints who won
 def win(WIN, winner, HEIGHT):

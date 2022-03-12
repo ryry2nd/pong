@@ -4,7 +4,7 @@ prints the error given
 #imports
 import pygame
 
-ERROR_FONT = pygame.font.SysFont('comicsans', 50)#defines the font
+ERROR_FONT = pygame.font.SysFont('timesnewroman', 50)#defines the font
 
 #defines main code
 def main(WIN, error):

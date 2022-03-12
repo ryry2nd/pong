@@ -10,7 +10,7 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SERVER_TEXT = pygame.font.SysFont('comicsans', 50).render(
+SERVER_TEXT = pygame.font.SysFont('timesnewroman', 50).render(
     str("Chose the IP of the player you want to join"), 1, (255, 255, 255))
 
 #defines main function

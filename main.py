@@ -15,7 +15,7 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont('comicsans', 40)
+SCORE_FONT = pygame.font.SysFont('timesnewroman', 40)
 
 #constints
 WIDTH, HEIGHT = 900, 500

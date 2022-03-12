@@ -10,7 +10,7 @@ pygame.init()
 pygame.font.init()
 
 #inputletters
-INPUT_FONT = pygame.font.SysFont('comicsans', 100)
+INPUT_FONT = pygame.font.SysFont('timesnewroman', 100)
 
 ip = '.'.join(getLocalIp.main().split('.')[0:3])+'.' # pulls local ip and removes last numbers
 

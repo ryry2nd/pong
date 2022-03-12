@@ -10,8 +10,8 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont('comicsans', 100)
-WIN_FONT = pygame.font.SysFont('comicsans', 100)
+SCORE_FONT = pygame.font.SysFont('timesnewroman', 100)
+WIN_FONT = pygame.font.SysFont('timesnewroman', 100)
 
 # sets the points
 p1Points, p2Points = 0, 0
