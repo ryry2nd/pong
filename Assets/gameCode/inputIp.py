@@ -3,6 +3,7 @@ defines the input letters class
 """
 #imports
 import pygame
+from online import getLocalIp
 
 #init
 pygame.init()
@@ -11,7 +12,7 @@ pygame.font.init()
 #inputletters
 INPUT_FONT = pygame.font.SysFont('comicsans', 100)
 
-ip = "192.168."# defines the ip string
+ip = '.'.join(getLocalIp.main().split('.')[0:3])+'.' # pulls local ip and removes last numbers
 
 #defines the input letters class
 class InputIp:
