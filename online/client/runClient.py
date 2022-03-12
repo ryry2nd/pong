@@ -42,15 +42,29 @@ def main(WIN, RES, FPS, IP):
 
     #init vars
     run = True
+    connecting = (p1XPos == 60)
     clock = pygame.time.Clock()#defines the clock
 
     #renders when it needs to print the ip
     printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
 
-    WIN.fill((0, 0, 0))# fills the screen
-    WIN.blit(printip_text, (0, 100))
-    pygame.display.update()
-    pygame.time.delay(5000)
+    while connecting:
+        clock.tick(FPS)
+        for event in pygame.event.get():#loops through the events
+            if event.type == pygame.QUIT:#if it is quit, quit
+                run = False
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.KEYDOWN:# runs when a key is pressed
+                if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
+                    return
+
+        WIN.fill((0, 0, 0))# fills the screen
+        WIN.blit(printip_text, (0, 100))
+        pygame.display.update()
+
+        connecting = n.send()
 
     while run:# game loop
         moveUp = None
@@ -83,12 +97,7 @@ def main(WIN, RES, FPS, IP):
             win(WIN, "player2", HEIGHT)
             break
         elif atrobutes == "exit":
-            print("hi")
             break
-        # if the server timed out, print the time out screen and quit
-        #if atrobutes["stop"]:
-        #    error.main(WIN, "Server timed out")
-        #    return
 
         #renders the fonts
         p1Score_text = SCORE_FONT.render(str(atrobutes["points"][0]), 1, (255, 255, 255))

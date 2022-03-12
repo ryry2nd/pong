@@ -1,9 +1,20 @@
 #imports
-import socket, pickle, random
+import socket, pickle, random, pygame
+from threading import Thread
 from Assets.gameCode.gameObjects import Paddle, Ball
-    
+
+connecting = True
+
+def waiting(conn):
+    while connecting:
+        conn.recv(2048)
+        conn.sendall(pickle.dumps(True))
+    conn.sendall(pickle.dumps(False))
+
+
 #defines the main funtion
 def main(RES):
+    global connecting
     #defines the res
     WIDTH = RES[0]
     HEIGHT = RES[1]
@@ -26,6 +37,7 @@ def main(RES):
         Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]
     
     #sets the vars
+    connecting = True
     playerConn = []
     points = [0, 0]
     run = True
@@ -35,9 +47,11 @@ def main(RES):
         playerConn.append(conn)
         #sends the reply
         if i == 0:
-            playerConn[i].sendall(pickle.dumps((60, WIDTH - 70)))
+            playerConn[0].sendall(pickle.dumps((60, WIDTH - 70)))
+            Thread(target=waiting, args=(playerConn[0], )).start()
         else:
-            playerConn[i].sendall(pickle.dumps((WIDTH - 70, 60)))
+            playerConn[1].sendall(pickle.dumps((WIDTH - 70, 60)))
+            connecting = False
 
     s.close()
 
@@ -45,8 +59,8 @@ def main(RES):
         runFrame = True
         objects[0].y = HEIGHT // 2 - 50
         objects[1].y = HEIGHT // 2 - 50
-        objects[2].x = WIDTH//2 - 10
-        objects[2].y = HEIGHT//2 - 10
+        objects[2].x = WIDTH // 2 - 10
+        objects[2].y = HEIGHT // 2 - 10
         objects[2].yVel = 0
 
         if points[0] > points[1]:
@@ -62,8 +76,8 @@ def main(RES):
                 if p1 != None:
                     objects[0].move(p1, HEIGHT)
             except EOFError:
-                #playerConn[1].recv(2048)
-                #playerConn[1].sendall(pickle.dumps("exit"))
+                playerConn[1].recv(2048)
+                playerConn[1].sendall(pickle.dumps("exit"))
                 break
             try:
                 p2 = pickle.loads(playerConn[1].recv(2048))

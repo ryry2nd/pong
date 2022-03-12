@@ -38,8 +38,9 @@ class Network:
         return reply
 
     #defines the send funtion
-    def send(self, data):
+    def send(self, data=None):
         #sends the data
         self.client.send(pickle.dumps(data))
+
         #recieves other data
         return pickle.loads(self.client.recv(2048))
