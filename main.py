@@ -70,6 +70,7 @@ def main():
             t1.start()#start the thread
             #join the server with the ip
             client.main(WIN, (WIDTH, HEIGHT), FPS, socket.gethostbyname(socket.gethostname()))
+            t1.join()
 
         
         pygame.display.update()#update the display
