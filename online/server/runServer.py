@@ -13,7 +13,7 @@ connecting = True
 # the waiting thread
 def waiting(conn, s):
     while connecting:
-        if pickle.loads(conn.recv(2048)):# is True the reply is True
+        if pickle.loads(conn.recv(4)):# is True the reply is True
             conn.sendall(pickle.dumps(None))# sends the client nothing
             s.close()# closes the server
             exit()
@@ -92,19 +92,19 @@ def main(RES):
         # loops every frame
         while runFrame:
             try:
-                p1 = pickle.loads(playerConn[0].recv(2048))
+                p1 = pickle.loads(playerConn[0].recv(4))
                 if p1 != None:# if it is not getting nothing, move the paddle
                     objects[0].move(p1, HEIGHT)
             except EOFError:# if it is getting that error, exit
-                playerConn[1].recv(2048)
+                playerConn[1].recv(4)
                 playerConn[1].sendall(pickle.dumps("exit"))
                 break
             try:
-                p2 = pickle.loads(playerConn[1].recv(2048))
+                p2 = pickle.loads(playerConn[1].recv(4))
                 if p2 != None:# if it is not getting nothing, move the paddle
                     objects[1].move(p2, HEIGHT)
             except EOFError:# if it is getting that error, exit
-                playerConn[0].recv(2048)
+                playerConn[0].recv(4)
                 playerConn[0].sendall(pickle.dumps("exit"))
                 break
 
@@ -126,15 +126,15 @@ def main(RES):
             playerConn[1].sendall(pickle.dumps(replyp2))
         
         if points[0] >= 7:# if player1's points are >= 7 then player 1 wins
-            playerConn[0].recv(2048)
-            playerConn[1].recv(2048)
+            playerConn[0].recv(4)
+            playerConn[1].recv(4)
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(1))
             playerConn[1].sendall(pickle.dumps(1))
             run = False
         elif points[1] >= 7:# if player2's points are >= 7 then player 2 wins
-            playerConn[0].recv(2048)
-            playerConn[1].recv(2048)
+            playerConn[0].recv(4)
+            playerConn[1].recv(4)
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(2))
             playerConn[1].sendall(pickle.dumps(2))

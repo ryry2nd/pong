@@ -35,7 +35,7 @@ class Network:
             return False
 
         #defines the reply from the server
-        reply = pickle.loads(self.client.recv(2048))
+        reply = pickle.loads(self.client.recv(32))
 
         #returns all of the initualised objects
         return reply
@@ -46,4 +46,4 @@ class Network:
         self.client.send(pickle.dumps(data))
 
         #recieves other data
-        return pickle.loads(self.client.recv(2048))
+        return pickle.loads(self.client.recv(256))
