@@ -1,5 +1,5 @@
 #imports
-import pygame, socket
+import pygame, socket, os
 from threading import Thread
 import local.rungame as single
 from online import getLocalIp
@@ -21,6 +21,7 @@ FPS = 60
 #set window
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
+pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'icon.png')))
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):
