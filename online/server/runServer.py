@@ -1,13 +1,16 @@
 #imports
-import socket, pickle, random, pygame
+import socket, pickle, random
 from threading import Thread
 from Assets.gameCode.gameObjects import Paddle, Ball
 
 connecting = True
 
-def waiting(conn):
+def waiting(conn, s):
     while connecting:
-        conn.recv(2048)
+        if pickle.loads(conn.recv(2048)):
+            conn.sendall(pickle.dumps(None))
+            s.close()
+            exit()
         conn.sendall(pickle.dumps(True))
     conn.sendall(pickle.dumps(False))
 
@@ -43,12 +46,15 @@ def main(RES):
     run = True
     
     for i in range(2):
-        conn, addr = s.accept()# gets the client
+        try:
+            conn, addr = s.accept()# gets the client
+        except OSError:
+            exit()
         playerConn.append(conn)
         #sends the reply
         if i == 0:
             playerConn[0].sendall(pickle.dumps((60, WIDTH - 70)))
-            Thread(target=waiting, args=(playerConn[0], )).start()
+            Thread(target=waiting, args=(playerConn[0], s, )).start()
         else:
             playerConn[1].sendall(pickle.dumps((WIDTH - 70, 60)))
             connecting = False

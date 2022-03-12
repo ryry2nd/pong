@@ -38,7 +38,7 @@ class Network:
         return reply
 
     #defines the send funtion
-    def send(self, data=None):
+    def send(self, data=False):
         #sends the data
         self.client.send(pickle.dumps(data))
 

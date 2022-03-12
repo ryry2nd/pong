@@ -53,11 +53,13 @@ def main(WIN, RES, FPS, IP):
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
+                n.send(True)
                 pygame.quit()
                 exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
+                    n.send(True)
                     return
 
         WIN.fill((0, 0, 0))# fills the screen
