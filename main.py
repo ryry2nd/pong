@@ -2,6 +2,7 @@
 import pygame, socket
 from threading import Thread
 import local.rungame as single
+from online import getLocalIp
 import online.client.runClient as client
 import online.server.runServer as server
 import online.client.getServer as getServer
@@ -69,7 +70,7 @@ def main():
             t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
             t1.start()#start the thread
             #join the server with the ip
-            client.main(WIN, (WIDTH, HEIGHT), FPS, socket.gethostbyname(socket.gethostname()))
+            client.main(WIN, (WIDTH, HEIGHT), FPS, getLocalIp.main())
             t1.join()
 
         

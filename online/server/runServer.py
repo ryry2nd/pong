@@ -1,6 +1,7 @@
 #imports
 import socket, pickle, random
 from threading import Thread
+from online import getLocalIp
 from Assets.gameCode.gameObjects import Paddle, Ball
 
 connecting = True
@@ -23,7 +24,7 @@ def main(RES):
     HEIGHT = RES[1]
 
     #gets the ip and host name
-    server = socket.gethostbyname(socket.gethostname())
+    server = getLocalIp.main()
     port = 5555
 
     #defines the socket

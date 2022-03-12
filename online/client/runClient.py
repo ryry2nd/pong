@@ -2,13 +2,14 @@
 import pygame, socket
 from online.client.network import Network
 from Assets.gameCode.errors import error
+from online import getLocalIp
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #constents
-IP_ADDRESS = socket.gethostbyname(socket.gethostname())
+IP_ADDRESS = getLocalIp.main()
 
 #fonts
 SCORE_FONT = pygame.font.SysFont('comicsans', 100)
