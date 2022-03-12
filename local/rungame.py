@@ -39,7 +39,7 @@ def restartPoints():
     p1Points, p2Points = 0, 0
 
 
-#main funtion
+#main function
 def main(WIN, RES, FPS):
     #get globals
     global p1Points, p2Points
@@ -90,10 +90,10 @@ def main(WIN, RES, FPS):
         if keys_pressed[pygame.K_DOWN]:# moves player2 down if in bounds
             PLAYER2.move(False, HEIGHT)
 
-        if BALL.x < 0: # if the ball is on the left increace the score by 1 and restart
+        if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart
             p2Points += 1
             run = False
-        elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increace the score by 1 and restart
+        elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increase the score by 1 and restart
             p1Points += 1
             run = False
 
@@ -118,7 +118,7 @@ def main(WIN, RES, FPS):
 
         pygame.display.update()# updates the display
         
-        if checkWin(WIN, HEIGHT):# checkes if there is a winner
+        if checkWin(WIN, HEIGHT):# checks if there is a winner
             restartPoints()
             return
     

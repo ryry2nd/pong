@@ -17,7 +17,7 @@ IP_ADDRESS = getLocalIp.main()
 #fonts
 SCORE_FONT = pygame.font.SysFont('comicsans', 100)
 WIN_FONT = pygame.font.SysFont('comicsans', 100)
-PRINTIP_FONT = pygame.font.SysFont('comicsans', 100)
+PRINT_IP_FONT = pygame.font.SysFont('comicsans', 100)
 
 #prints who won
 def win(WIN, winner, HEIGHT):
@@ -27,7 +27,7 @@ def win(WIN, winner, HEIGHT):
     pygame.time.delay(3000)
 
 
-#main funtion
+#main function
 def main(WIN, RES, FPS, IP):
     #def width and height
     WIDTH = RES[0]
@@ -52,7 +52,7 @@ def main(WIN, RES, FPS, IP):
     clock = pygame.time.Clock()#defines the clock
 
     #renders when it needs to print the ip
-    printip_text = PRINTIP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
+    print_ip_text = PRINT_IP_FONT.render("The IP is: " + IP_ADDRESS, 1, (255, 255, 255))
 
     #the connection screen
     while connecting:
@@ -71,14 +71,14 @@ def main(WIN, RES, FPS, IP):
 
         #makes the screen
         WIN.fill((0, 0, 0))
-        WIN.blit(printip_text, (0, 100))
+        WIN.blit(print_ip_text, (0, 100))
         pygame.display.update()
 
-        #askes if player 2 has joined yet
+        #asks if player 2 has joined yet
         connecting = n.send()
 
     while run:# game loop
-        moveUp = None#restarts the move Up vareable
+        moveUp = None#restarts the move Up variable
         clock.tick(FPS)#fps
 
         for event in pygame.event.get():#loops through the events

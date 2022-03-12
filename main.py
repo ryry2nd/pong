@@ -44,7 +44,7 @@ def clickWindow(WIN, POS, l1, l2=""):
     if pygame.mouse.get_pressed()[0] and rectangle.collidepoint(pygame.mouse.get_pos()):
         return True
 
-#main funtion 
+#main function 
 def main():
     run = True
     clock = pygame.time.Clock()#defines a clock
@@ -66,7 +66,7 @@ def main():
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         #if the box is clocked go to the find a game code
         elif clickWindow(WIN, (300, 100), "Join a", "Server"):
-            IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)#askes for the ip
+            IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)#asks for the ip
             if IP:
                 client.main(WIN, (WIDTH, HEIGHT), FPS, IP)# finds the ip
         #if the box is clicked make a server

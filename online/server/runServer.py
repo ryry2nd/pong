@@ -21,7 +21,7 @@ def waiting(conn, s):
     conn.sendall(pickle.dumps(False))# sends it False because it is done connecting
 
 
-#defines the main funtion
+#defines the main function
 def main(RES):
     global connecting# get global
 
@@ -51,7 +51,7 @@ def main(RES):
     points = [0, 0]
     run = True
     
-    #connects the vareables
+    #connects the variables
     for i in range(2):
         try:# if the s socket is closed, quit
             conn, addr = s.accept()# gets the client
@@ -109,22 +109,22 @@ def main(RES):
                 run = False
                 break
 
-            # defines the replys
-            replyp1 = {"otherP": (objects[1].y),"yourP": (objects[0].y), "points": points, "ball": (objects[2].x, objects[2].y)}
-            replyp2 = {"otherP": (objects[0].y),"yourP": (objects[1].y), "points": points, "ball": (objects[2].x, objects[2].y)}
+            # defines the reply's
+            replyP1 = {"otherP": (objects[1].y),"yourP": (objects[0].y), "points": points, "ball": (objects[2].x, objects[2].y)}
+            replyP2 = {"otherP": (objects[0].y),"yourP": (objects[1].y), "points": points, "ball": (objects[2].x, objects[2].y)}
 
-            if objects[2].x < 0: # if the ball is on the left increace the score by 1 and restart
+            if objects[2].x < 0: # if the ball is on the left increase the score by 1 and restart
                 points[1] += 1
                 runFrame = False
-            elif objects[2].x + objects[2].size > WIDTH:# if the ball is on the right increace the score by 1 and restart
+            elif objects[2].x + objects[2].size > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 points[0] += 1
                 runFrame = False
 
             objects[2].move((objects[0], objects[1]))# move the ball
 
-            #sends the replys
-            playerConn[0].sendall(pickle.dumps(replyp1))
-            playerConn[1].sendall(pickle.dumps(replyp2))
+            #sends the reply's
+            playerConn[0].sendall(pickle.dumps(replyP1))
+            playerConn[1].sendall(pickle.dumps(replyP2))
         
         if points[0] >= 7:# if player1's points are >= 7 then player 1 wins
             playerConn[0].recv(4)
