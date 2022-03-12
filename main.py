@@ -59,18 +59,18 @@ def main():
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     run = False
 
-        WIN.fill((255, 255, 255))# fills the screen
+        WIN.fill((0, 0, 0))# fills the screen
 
         #if the box is clicked, start a local game
         if clickWindow(WIN, (100, 100), "Local", "Game"):
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         #if the box is clocked go to the find a game code
-        elif clickWindow(WIN, (300, 100), "Find a", "Game"):
+        elif clickWindow(WIN, (300, 100), "Join a", "Server"):
             IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)#askes for the ip
             if IP:
                 client.main(WIN, (WIDTH, HEIGHT), FPS, IP)# finds the ip
         #if the box is clicked make a server
-        elif clickWindow(WIN, (500, 100), "Make a", "Server"):
+        elif clickWindow(WIN, (500, 100), "Be a", "Server"):
             #define the thread
             t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
             t1.start()#start the thread

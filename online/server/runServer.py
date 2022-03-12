@@ -95,17 +95,18 @@ def main(RES):
                 p1 = pickle.loads(playerConn[0].recv(4))
                 if p1 != None:# if it is not getting nothing, move the paddle
                     objects[0].move(p1, HEIGHT)
-            except EOFError:# if it is getting that error, exit
-                playerConn[1].recv(4)
-                playerConn[1].sendall(pickle.dumps("exit"))
+            except EOFError:# if the person disconnected, send the disconnect code and quit
+                playerConn[1].sendall(pickle.dumps(0))
+                run = False
                 break
+            
             try:
                 p2 = pickle.loads(playerConn[1].recv(4))
                 if p2 != None:# if it is not getting nothing, move the paddle
                     objects[1].move(p2, HEIGHT)
-            except EOFError:# if it is getting that error, exit
-                playerConn[0].recv(4)
-                playerConn[0].sendall(pickle.dumps("exit"))
+            except EOFError:# if the person disconnected, send the disconnect code and quit
+                playerConn[0].sendall(pickle.dumps(0))
+                run = False
                 break
 
             # defines the replys

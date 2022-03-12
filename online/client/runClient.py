@@ -110,7 +110,7 @@ def main(WIN, RES, FPS, IP):
             win(WIN, "player2", HEIGHT)
             break
         # if it is exit then exit
-        elif atrobutes == "exit":
+        elif atrobutes == 0:
             break
 
         #renders the fonts

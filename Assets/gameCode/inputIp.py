@@ -13,7 +13,7 @@ INPUT_FONT = pygame.font.SysFont('comicsans', 100)
 
 #defines the input letters class
 class InputIp:
-    ip = ""# defines the ip string
+    ip = "192.168."# defines the ip string
     #init
     def __init__(self, res):
         #defines the resolution
@@ -22,7 +22,7 @@ class InputIp:
     #places the text on the screen
     def placeText(self, WIN, RES):
         WIN.blit(INPUT_FONT.render(str(self.ip), 
-            1, (0, 0, 0)), RES)
+            1, (255, 255, 255)), RES)
     #adds a key
     def addkey(self, keys):
         # if backspace is pressed remove the last number

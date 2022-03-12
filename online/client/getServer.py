@@ -11,7 +11,7 @@ pygame.font.init()
 
 #fonts
 SERVER_TEXT = pygame.font.SysFont('comicsans', 50).render(
-    str("Chose the IP of the player you want to join"), 1, (0, 0, 0))
+    str("Chose the IP of the player you want to join"), 1, (255, 255, 255))
 
 #defines main funtion
 def main(WIN, RES, FPS):
@@ -41,7 +41,7 @@ def main(WIN, RES, FPS):
                 else:#otherwise add the key
                     inputL.addkey(event.key)
 
-        WIN.fill((255, 255, 255))#fill the screen
+        WIN.fill((0, 0, 0))#fill the screen
 
         #adds the text
         WIN.blit(SERVER_TEXT, (0, HEIGHT//2 - 100))
