@@ -2,7 +2,7 @@
 loads the gui
 """
 #imports
-import pygame, os
+import pygame, os, time
 from threading import Thread
 import local.rungame as single
 from online import getLocalIp
@@ -48,7 +48,6 @@ def clickWindow(WIN, POS, l1, l2=""):
 def main():
     run = True
     clock = pygame.time.Clock()#defines a clock
-
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():#loops through the events
@@ -75,7 +74,20 @@ def main():
             t1 = Thread(target=server.main, args=((WIDTH, HEIGHT), ))
             t1.start()#start the thread
             #join the server with the ip
-            client.main(WIN, (WIDTH, HEIGHT), FPS, getLocalIp.main())
+            
+            connected = False
+            cnt=0
+            #the server may not be ready yet so loop for 5 seconds untill connection if not bomb out
+            while not connected:
+                try:
+                    cnt+=1
+                    client.main(WIN, (WIDTH, HEIGHT), FPS, getLocalIp.main())
+                    connected = True
+                except ConnectionRefusedError:
+                    if cnt > 5:
+                        raise
+                    time.sleep(1)
+                
             t1.join()
 
         
