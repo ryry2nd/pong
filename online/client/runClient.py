@@ -77,6 +77,7 @@ def main(WIN, RES, FPS, IP):
         #asks if player 2 has joined yet
         connecting = n.send()
 
+    #delays the screen
     WIN.fill((0, 0, 0))
     pygame.display.update()
     pygame.time.delay(2000)

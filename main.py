@@ -42,6 +42,10 @@ def main():
 
         #if the box is clicked, start a local game
         if clickWindow(WIN, (100, 100), "Local", "Game"):
+            #delays the screen
+            WIN.fill((0, 0, 0))
+            pygame.display.update()
+            pygame.time.delay(2000)
             single.main(WIN, (WIDTH, HEIGHT), FPS)
         #if the box is clocked go to the find a game code
         elif clickWindow(WIN, (300, 100), "Join a", "Server"):
