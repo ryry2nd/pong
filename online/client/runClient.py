@@ -6,6 +6,7 @@ import pygame
 from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
+from Assets.gameCode.gui.countDown import countDown
 from Assets.gameCode.game.settings import Settings
 #inits
 pygame.init()
@@ -25,13 +26,6 @@ def win(WIN, winner, HEIGHT):
     WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
     pygame.display.update()
     pygame.time.delay(3000)
-
-def countDown(WIN, WIDTH, HEIGHT):
-    for i in range(3, 0, -1):
-        WIN.fill((0, 0, 0))
-        WIN.blit(Settings.Fonts.COUNTDOWN_FONT.render(str(i), 1, (255, 255, 255)), (WIDTH/2, HEIGHT/2 - 50))
-        pygame.display.update()
-        pygame.time.delay(1000)
 
 
 #main function

@@ -87,7 +87,7 @@ def main(WIN, RES, FPS):
                 if event.type == pygame.KEYDOWN:# runs when a key is pressed
                     if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                         restartPoints()
-                        return
+                        return False
             
             keys_pressed = pygame.key.get_pressed()# gets all the keys
             
@@ -131,4 +131,6 @@ def main(WIN, RES, FPS):
             
         if checkWin(WIN, HEIGHT):# checks if there is a winner
             restartPoints()
-            return
+            run = False
+            break
+    return True

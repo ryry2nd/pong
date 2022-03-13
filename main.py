@@ -9,7 +9,9 @@ from online import getLocalIp
 import online.client.runClient as client
 import online.server.runServer as server
 import online.client.getServer as getServer
+from Assets.gameCode.gui.countDown import countDown
 from Assets.gameCode.gui.clickWindow import clickWindow
+from Assets.gameCode.gui.restartButton import restartButton
 
 #inits
 pygame.init()
@@ -42,11 +44,13 @@ def main():
 
         #if the box is clicked, start a local game
         if clickWindow(WIN, (100, 100), "Local", "Game"):
-            #delays the screen
-            WIN.fill((0, 0, 0))
-            pygame.display.update()
-            pygame.time.delay(2000)
-            single.main(WIN, (WIDTH, HEIGHT), FPS)
+            countDown(WIN, WIDTH, HEIGHT)# counts down
+            allow = single.main(WIN, (WIDTH, HEIGHT), FPS)# starts the game
+            while allow and restartButton(WIN, (WIDTH, HEIGHT), FPS):# if the person clicked restart, restart
+                countDown(WIN, WIDTH, HEIGHT)# counts down
+                allow = single.main(WIN, (WIDTH, HEIGHT), FPS)# starts the game
+            pygame.time.delay(1000)
+            
         #if the box is clocked go to the find a game code
         elif clickWindow(WIN, (300, 100), "Join a", "Server"):
             IP = getServer.main(WIN, (WIDTH, HEIGHT), FPS)#asks for the ip
@@ -72,12 +76,12 @@ def main():
                         raise
                     time.sleep(1)
                 
-            t1.join()
+            t1.join()# joins the server thread
 
         
         pygame.display.update()#update the display
     
-    pygame.quit()
+    pygame.quit()# quits pygame
 
 #if the code is not being imported run the code
 if __name__ == '__main__':
