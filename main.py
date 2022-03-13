@@ -57,7 +57,7 @@ def main():
             
             connected = False
             cnt=0
-            #the server may not be ready yet so loop for 5 seconds untill connection if not bomb out
+            #the server may not be ready yet so loop for 5 seconds until connection if not bomb out
             while not connected:
                 try:
                     cnt+=1
