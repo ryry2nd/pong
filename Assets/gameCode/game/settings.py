@@ -9,7 +9,7 @@ class Settings(object):
 
     FONT_FILE = 'Assets/Blippo Bold.ttf' 
     SCORE_FONT_FILE = 'Assets/vt323.regular.ttf'
-    COUNTDOWN_FONT = pygame.font.Font(FONT_FILE, 30)
+    COUNTDOWN_FONT = pygame.font.Font(SCORE_FONT_FILE, 200)
     PRINT_IP_FONT = pygame.font.Font(FONT_FILE, 30)
     ERROR_FONT = pygame.font.Font(FONT_FILE, 20) 
     DEFAULT_FONT = pygame.font.Font(FONT_FILE, 30)
