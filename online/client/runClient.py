@@ -6,7 +6,7 @@ import pygame, socket
 from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 #inits
 pygame.init()
 pygame.font.init()

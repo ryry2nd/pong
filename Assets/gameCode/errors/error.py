@@ -2,7 +2,7 @@
 prints the error given
 """
 #imports
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 import pygame
 
 

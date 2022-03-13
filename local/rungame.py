@@ -4,7 +4,7 @@ runs the local game
 #imports
 import pygame, random
 from Assets.gameCode.game.gameObjects import Paddle, Ball
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 
 #inits
 pygame.init()
