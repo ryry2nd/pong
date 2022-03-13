@@ -77,6 +77,10 @@ def main(WIN, RES, FPS, IP):
         #asks if player 2 has joined yet
         connecting = n.send()
 
+    WIN.fill((0, 0, 0))
+    pygame.display.update()
+    pygame.time.delay(2000)
+    
     while run:# game loop
         moveUp = None#restarts the move Up variable
         clock.tick(FPS)#fps

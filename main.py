@@ -9,13 +9,11 @@ from online import getLocalIp
 import online.client.runClient as client
 import online.server.runServer as server
 import online.client.getServer as getServer
+from Assets.gameCode.gui.clickWindow import clickWindow
 
 #inits
 pygame.init()
 pygame.font.init()
-
-#fonts
-SCORE_FONT = pygame.font.SysFont('timesnewroman', 40)
 
 #constints
 WIDTH, HEIGHT = 900, 500
@@ -25,24 +23,6 @@ FPS = 60
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'icon.png')))
-
-#defines what happens when you click a window
-def clickWindow(WIN, POS, l1, l2=""):
-    # gets the x and y position
-    x = POS[0]
-    y = POS[1]
-
-    rectangle = pygame.Rect(x, y, 100, 100)#makes a rectangle
-    singleplayer_text = [SCORE_FONT.render(l1, 1, (255, 255, 255)), 
-        SCORE_FONT.render(l2, 1, (255, 255, 255))]#renders the text
-
-    pygame.draw.rect(WIN, (0, 0, 0), rectangle)#draws the rectangle
-    WIN.blit(singleplayer_text[0], (x,y))#draws the text
-    WIN.blit(singleplayer_text[1], (x,y+50))
-
-    #if the box is clicked, return True
-    if pygame.mouse.get_pressed()[0] and rectangle.collidepoint(pygame.mouse.get_pos()):
-        return True
 
 #main function 
 def main():
@@ -55,7 +35,7 @@ def main():
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
 
-            if event.type == pygame.KEYDOWN:# runs when a key is pressed
+            elif event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     run = False
 

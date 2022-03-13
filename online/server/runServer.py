@@ -5,7 +5,7 @@ starts the server
 import socket, pickle, random
 from threading import Thread
 from online import getLocalIp
-from Assets.gameCode.gameObjects import Paddle, Ball
+from Assets.gameCode.game.gameObjects import Paddle, Ball
 
 #is only true if it is connecting
 connecting = True

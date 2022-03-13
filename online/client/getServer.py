@@ -3,7 +3,7 @@ gets the server
 """
 #imports
 import pygame
-from Assets.gameCode import inputIp
+from Assets.gameCode.gui import inputIp
 
 #inits
 pygame.init()
