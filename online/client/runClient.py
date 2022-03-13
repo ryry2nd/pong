@@ -6,7 +6,7 @@ import pygame, socket
 from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
-
+from Assets.settings import Settings
 #inits
 pygame.init()
 pygame.font.init()
@@ -15,9 +15,9 @@ pygame.font.init()
 IP_ADDRESS = getLocalIp.main()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont('timesnewroman', 100)
-WIN_FONT = pygame.font.SysFont('timesnewroman', 100)
-PRINT_IP_FONT = pygame.font.SysFont('timesnewroman', 75)
+SCORE_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
+WIN_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
+PRINT_IP_FONT = pygame.font.SysFont(Settings.FONTNAME, 75)
 
 #prints who won
 def win(WIN, winner, HEIGHT):

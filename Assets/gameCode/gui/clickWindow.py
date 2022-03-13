@@ -3,13 +3,14 @@ defines what happions when you click a window
 """
 #imports
 import pygame
+from Assets.settings import Settings
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont('timesnewroman', 40)
+SCORE_FONT = pygame.font.SysFont(Settings.FONTNAME, 40)
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):

@@ -2,9 +2,10 @@
 prints the error given
 """
 #imports
+from Assets.settings import Settings
 import pygame
 
-ERROR_FONT = pygame.font.SysFont('timesnewroman', 50)#defines the font
+ERROR_FONT = pygame.font.SysFont(Settings.FONTNAME, 50)#defines the font
 
 #defines main code
 def main(WIN, error):
