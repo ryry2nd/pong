@@ -42,6 +42,7 @@ def main():
 
         #if the box is clicked, start a local game
         if clickWindow(WIN, (100, 100), "Local", "Game"):
+            #delays the screen
             WIN.fill((0, 0, 0))
             pygame.display.update()
             pygame.time.delay(2000)
