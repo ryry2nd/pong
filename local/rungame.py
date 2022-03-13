@@ -11,8 +11,8 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = Settings.SCORE_FONT
-WIN_FONT = Settings.WIN_FONT 
+SCORE_FONT = Settings.Fonts.SCORE_FONT
+WIN_FONT = Settings.Fonts.WIN_FONT 
 
 # sets the points
 p1Points, p2Points = 0, 0
@@ -58,70 +58,77 @@ def main(WIN, RES, FPS):
     run = True
     clock = pygame.time.Clock()#defines the clock
 
-    #sets where the ball goes first
-    if p1Points > p2Points:
-        BALL.xVel = 3
-    elif p1Points < p2Points:
-        BALL.xVel = -3
-    else:
-        BALL.xVel = random.choice([-3,3])
+    while run:# runs every round
+        #reset vars
+        runFrame = True
+        PLAYER1.y = HEIGHT // 2 - 50
+        PLAYER2.y = HEIGHT // 2 - 50
+        BALL.x = WIDTH // 2 - 10
+        BALL.y = HEIGHT // 2 - 10
+        BALL.yVel = 0
 
-    while run:# game loop
-        clock.tick(FPS)#fps
+        #gets the ball starting vel
+        if p1Points > p2Points:
+            BALL.xVel = 3
+        elif p1Points < p2Points:
+            BALL.xVel = -3
+        else:
+            BALL.xVel = random.choice([-3,3])
 
-        for event in pygame.event.get():#loops through the events
-            if event.type == pygame.QUIT:#if it is quit, quit
-                run = False
-                pygame.quit()
-                exit()
+        while runFrame:#runs every frame
+            clock.tick(FPS)#fps
 
-            if event.type == pygame.KEYDOWN:# runs when a key is pressed
-                if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    restartPoints()
-                    return
-        
-        keys_pressed = pygame.key.get_pressed()# gets all the keys
-        
-        if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
-            PLAYER1.move(True, HEIGHT)
-        if keys_pressed[pygame.K_s]:# moves player1 down if in bounds
-            PLAYER1.move(False, HEIGHT)
-        if keys_pressed[pygame.K_UP]:# moves player2 up if in bounds
-            PLAYER2.move(True, HEIGHT)
-        if keys_pressed[pygame.K_DOWN]:# moves player2 down if in bounds
-            PLAYER2.move(False, HEIGHT)
+            for event in pygame.event.get():#loops through the events
+                if event.type == pygame.QUIT:#if it is quit, quit
+                    run = False
+                    pygame.quit()
+                    exit()
 
-        if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart
-            p2Points += 1
-            run = False
-        elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increase the score by 1 and restart
-            p1Points += 1
-            run = False
+                if event.type == pygame.KEYDOWN:# runs when a key is pressed
+                    if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
+                        restartPoints()
+                        return
+            
+            keys_pressed = pygame.key.get_pressed()# gets all the keys
+            
+            if keys_pressed[Settings.Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
+                PLAYER1.move(True, HEIGHT)
+            if keys_pressed[Settings.Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
+                PLAYER1.move(False, HEIGHT)
+            if keys_pressed[Settings.Key_Binds.PLAYER2_UP]:# moves player2 up if in bounds
+                PLAYER2.move(True, HEIGHT)
+            if keys_pressed[Settings.Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
+                PLAYER2.move(False, HEIGHT)
 
-        #renders the fonts
-        p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
-        p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
+            if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart
+                p2Points += 1
+                runFrame = False
+            elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increase the score by 1 and restart
+                p1Points += 1
+                runFrame = False
 
-        #makes the background
-        WIN.fill((0, 0, 0))
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
+            #renders the fonts
+            p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
+            p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
 
-        BALL.move((PLAYER1, PLAYER2)) #move the ball
+            #makes the background
+            WIN.fill((0, 0, 0))
+            pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
-        #makes the objects
-        PLAYER1.make_it(WIN)
-        PLAYER2.make_it(WIN)
-        BALL.make_it(WIN)
+            BALL.move((PLAYER1, PLAYER2)) #move the ball
 
-        #makes the score
+            #makes the objects
+            PLAYER1.make_it(WIN)
+            PLAYER2.make_it(WIN)
+            BALL.make_it(WIN)
 
-        WIN.blit(p1Score_text, (WIDTH/2-60, 0))
-        WIN.blit(p2Score_text, (WIDTH/2+20, 0))
+            #makes the score
 
-        pygame.display.update()# updates the display
-        
+            WIN.blit(p1Score_text, (WIDTH/2-60, 0))
+            WIN.blit(p2Score_text, (WIDTH/2+20, 0))
+
+            pygame.display.update()# updates the display
+            
         if checkWin(WIN, HEIGHT):# checks if there is a winner
             restartPoints()
             return
-    
-    main(WIN, (WIDTH, HEIGHT), FPS)#restarts

@@ -10,7 +10,7 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-DEFAULT_FONT = Settings.DEFAULT_FONT
+DEFAULT_FONT = Settings.Fonts.DEFAULT_FONT
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):

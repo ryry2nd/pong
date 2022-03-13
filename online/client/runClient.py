@@ -2,7 +2,7 @@
 runs the client code
 """
 #imports
-import pygame, socket
+import pygame
 from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
@@ -15,9 +15,9 @@ pygame.font.init()
 IP_ADDRESS = getLocalIp.main()
 
 #fonts
-SCORE_FONT = Settings.SCORE_FONT
-WIN_FONT = Settings.WIN_FONT
-PRINT_IP_FONT = Settings.PRINT_IP_FONT
+SCORE_FONT = Settings.Fonts.SCORE_FONT
+WIN_FONT = Settings.Fonts.WIN_FONT
+PRINT_IP_FONT = Settings.Fonts.PRINT_IP_FONT
 
 #prints who won
 def win(WIN, winner, HEIGHT):
@@ -29,7 +29,7 @@ def win(WIN, winner, HEIGHT):
 def countDown(WIN, WIDTH, HEIGHT):
     for i in range(3, 0, -1):
         WIN.fill((0, 0, 0))
-        WIN.blit(Settings.COUNTDOWN_FONT.render(str(i), 1, (255, 255, 255)), (WIDTH/2, HEIGHT/2 - 50))
+        WIN.blit(Settings.Fonts.COUNTDOWN_FONT.render(str(i), 1, (255, 255, 255)), (WIDTH/2, HEIGHT/2 - 50))
         pygame.display.update()
         pygame.time.delay(1000)
 
@@ -106,9 +106,9 @@ def main(WIN, RES, FPS, IP):
         #sends the y position and returns the atrobutes
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
-        if keys_pressed[pygame.K_w]:# moves player1 up if in bounds
+        if keys_pressed[Settings.Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
             moveUp = True
-        elif keys_pressed[pygame.K_s]:# moves player1 down if in bounds
+        elif keys_pressed[Settings.Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
             moveUp = False
 
         atrobutes = n.send(moveUp)# sends if it is moveing up and receves the data
