@@ -64,10 +64,6 @@ def main(WIN, RES, FPS):
         BALL.xVel = -3
     else:
         BALL.xVel = random.choice([-3,3])
-    
-    WIN.fill((0, 0, 0))
-    pygame.display.update()
-    pygame.time.delay(2000)
 
     while run:# game loop
         clock.tick(FPS)#fps
