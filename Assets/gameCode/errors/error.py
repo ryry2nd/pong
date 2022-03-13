@@ -2,7 +2,7 @@
 prints the error given
 """
 #imports
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 import pygame
 
 ERROR_FONT = pygame.font.SysFont(Settings.FONTNAME, 50)#defines the font

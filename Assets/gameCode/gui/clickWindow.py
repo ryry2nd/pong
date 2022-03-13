@@ -3,7 +3,7 @@ defines what happions when you click a window
 """
 #imports
 import pygame
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 
 #inits
 pygame.init()

@@ -4,7 +4,7 @@ gets the server
 #imports
 import pygame
 from Assets.gameCode.gui import inputIp
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 
 #inits
 pygame.init()

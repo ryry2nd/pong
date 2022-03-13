@@ -4,7 +4,7 @@ defines the input letters class
 #imports
 import pygame
 from online import getLocalIp
-from Assets.settings import Settings
+from Assets.gameCode.game.settings import Settings
 
 #init
 pygame.init()
