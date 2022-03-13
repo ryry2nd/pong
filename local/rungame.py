@@ -11,8 +11,8 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
-WIN_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
+SCORE_FONT = Settings.SCORE_FONT
+WIN_FONT = Settings.WIN_FONT 
 
 # sets the points
 p1Points, p2Points = 0, 0
@@ -114,8 +114,9 @@ def main(WIN, RES, FPS):
         BALL.make_it(WIN)
 
         #makes the score
-        WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
-        WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
+
+        WIN.blit(p1Score_text, (WIDTH/2-60, 0))
+        WIN.blit(p2Score_text, (WIDTH/2+20, 0))
 
         pygame.display.update()# updates the display
         

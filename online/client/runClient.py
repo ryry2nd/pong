@@ -15,9 +15,9 @@ pygame.font.init()
 IP_ADDRESS = getLocalIp.main()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
-WIN_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
-PRINT_IP_FONT = pygame.font.SysFont(Settings.FONTNAME, 75)
+SCORE_FONT = Settings.SCORE_FONT
+WIN_FONT = Settings.WIN_FONT
+PRINT_IP_FONT = Settings.PRINT_IP_FONT
 
 #prints who won
 def win(WIN, winner, HEIGHT):
@@ -25,6 +25,13 @@ def win(WIN, winner, HEIGHT):
     WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
     pygame.display.update()
     pygame.time.delay(3000)
+
+def countDown(WIN, WIDTH, HEIGHT):
+    for i in range(3, 0, -1):
+        WIN.fill((0, 0, 0))
+        WIN.blit(Settings.COUNTDOWN_FONT.render(str(i), 1, (255, 255, 255)), (WIDTH/2, HEIGHT/2 - 50))
+        pygame.display.update()
+        pygame.time.delay(1000)
 
 
 #main function
@@ -80,8 +87,8 @@ def main(WIN, RES, FPS, IP):
     #delays the screen
     WIN.fill((0, 0, 0))
     pygame.display.update()
-    pygame.time.delay(2000)
     
+    countDown(WIN, WIDTH, HEIGHT)
     while run:# game loop
         moveUp = None#restarts the move Up variable
         clock.tick(FPS)#fps
@@ -127,9 +134,8 @@ def main(WIN, RES, FPS, IP):
         pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
 
         #makes the score
-        WIN.blit(p1Score_text, ((WIDTH//2) - 100, 0))
-        WIN.blit(p2Score_text, ((WIDTH//2 - 50) + 100, 0))
-
+        WIN.blit(p1Score_text, (WIDTH/2-55, 0))
+        WIN.blit(p2Score_text, (WIDTH/2+20, 0))
         #makes the objects
         pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p1XPos, atrobutes["yourP"], 20, 100))
         pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p2XPos, atrobutes["otherP"], 20, 100))

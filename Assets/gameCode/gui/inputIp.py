@@ -11,7 +11,7 @@ pygame.init()
 pygame.font.init()
 
 #inputletters
-INPUT_FONT = pygame.font.SysFont(Settings.FONTNAME, 100)
+INPUT_FONT = Settings.INPUT_FONT
 
 ip = '.'.join(getLocalIp.main().split('.')[0:3])+'.' # pulls local ip and removes last numbers
 

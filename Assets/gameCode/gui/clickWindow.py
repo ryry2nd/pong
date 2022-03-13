@@ -10,7 +10,7 @@ pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = pygame.font.SysFont(Settings.FONTNAME, 40)
+DEFAULT_FONT = Settings.DEFAULT_FONT
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):
@@ -19,8 +19,8 @@ def clickWindow(WIN, POS, l1, l2=""):
     y = POS[1]
 
     rectangle = pygame.Rect(x, y, 100, 100)#makes a rectangle
-    singleplayer_text = [SCORE_FONT.render(l1, 1, (255, 255, 255)), 
-        SCORE_FONT.render(l2, 1, (255, 255, 255))]#renders the text
+    singleplayer_text = [DEFAULT_FONT.render(l1, 1, (255, 255, 255)), 
+        DEFAULT_FONT.render(l2, 1, (255, 255, 255))]#renders the text
 
     pygame.draw.rect(WIN, (0, 0, 0), rectangle)#draws the rectangle
     WIN.blit(singleplayer_text[0], (x,y))#draws the text
