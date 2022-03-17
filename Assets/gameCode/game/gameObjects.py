@@ -48,26 +48,37 @@ class Ball:
     def make_it(self, WIN):
         pygame.draw.circle(WIN, (255, 255, 255),
             (self.x, self.y), self.size)
-    # moves the ball
-    def move(self, players):
-        BALL = pygame.Rect(self.x, self.y,# makes the balls colision
-            self.size * (self.xVel / 16), self.size)#the faster it goes the larger the colision
+    
+    #sets up the colision
+    def collision(self, players):
+        #makes the virtual ball
+        BALL = pygame.Rect(self.x, self.y, self.size, self.size)
 
         # bounces off the walls
         if self.y + self.yVel <= 0 or self.y + self.yVel >= self.SCRHEIGHT - self.size:
             self.yVel = -self.yVel
-        
+
         for player in players:# loops through the paddles
             if BALL.colliderect(pygame.Rect(player.x, player.y, player.WIDTH, player.HEIGHT)):# runs when there is a colision
-                self.xVel= -self.xVel# reverses the balls x vel
-                self.yVel = -((((player.y + (player.HEIGHT // 2)) - self.y) - 10) // 10)# sets the y level based on where it hits the paddle
-
+                self.xVel =- self.xVel# reverses the balls x vel
+                self.yVel =- ((((player.y + (player.HEIGHT // 2)) - self.y) - 10) // 10)# sets the y level based on where it hits the paddle
+                
                 # make the ball faster
                 if self.xVel > 0:
                     self.xVel += 1
                 else:
                     self.xVel -= 1
-
-        #move the ball
-        self.x += self.xVel
+    
+    # moves the ball
+    def move(self, players):
+        for i in range(abs(self.xVel)):#loops through the ball's xVel and adds 1 to the position
+            #sets the colision
+            self.collision(players)
+    
+            #moves the ball's xpos by 1
+            if self.xVel > 0:
+                self.x += 1
+            else:
+                self.x -= 1
+        
         self.y += self.yVel
