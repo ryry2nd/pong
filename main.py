@@ -24,7 +24,7 @@ FPS = 60
 #set window
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
-pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'icon.png')))
+pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'Icon.png')))
 
 #main function 
 def main():
