@@ -4,15 +4,15 @@ runs the local game
 #imports
 import pygame, random
 from Assets.gameCode.game.gameObjects import Paddle, Ball
-from Assets.gameCode.game.settings import Settings
+from Assets.gameCode.game.settings import *
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #fonts
-SCORE_FONT = Settings.Fonts.SCORE_FONT
-WIN_FONT = Settings.Fonts.WIN_FONT 
+SCORE_FONT = Fonts.SCORE_FONT
+WIN_FONT = Fonts.WIN_FONT 
 
 # sets the points
 p1Points, p2Points = 0, 0
@@ -50,9 +50,9 @@ def main(WIN, RES, FPS):
     HEIGHT = RES[1]
 
     #init objects
-    PLAYER1 = Paddle((20, 100), (60, HEIGHT // 2 - 50))
-    PLAYER2 = Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50))
-    BALL = Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
+    PLAYER1 = Paddle((60, HEIGHT // 2 - 50))
+    PLAYER2 = Paddle((WIDTH - 70, HEIGHT // 2 - 50))
+    BALL = Ball((WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
 
     #init vars
     run = True
@@ -91,13 +91,13 @@ def main(WIN, RES, FPS):
             
             keys_pressed = pygame.key.get_pressed()# gets all the keys
             
-            if keys_pressed[Settings.Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
+            if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
                 PLAYER1.move(True, HEIGHT)
-            if keys_pressed[Settings.Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
+            if keys_pressed[Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
                 PLAYER1.move(False, HEIGHT)
-            if keys_pressed[Settings.Key_Binds.PLAYER2_UP]:# moves player2 up if in bounds
+            if keys_pressed[Key_Binds.PLAYER2_UP]:# moves player2 up if in bounds
                 PLAYER2.move(True, HEIGHT)
-            if keys_pressed[Settings.Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
+            if keys_pressed[Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
                 PLAYER2.move(False, HEIGHT)
 
             if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart

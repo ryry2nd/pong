@@ -7,7 +7,7 @@ from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
 from Assets.gameCode.gui.countDown import countDown
-from Assets.gameCode.game.settings import Settings
+from Assets.gameCode.game.settings import *
 #inits
 pygame.init()
 pygame.font.init()
@@ -16,9 +16,9 @@ pygame.font.init()
 IP_ADDRESS = getLocalIp.main()
 
 #fonts
-SCORE_FONT = Settings.Fonts.SCORE_FONT
-WIN_FONT = Settings.Fonts.WIN_FONT
-PRINT_IP_FONT = Settings.Fonts.PRINT_IP_FONT
+SCORE_FONT = Fonts.SCORE_FONT
+WIN_FONT = Fonts.WIN_FONT
+PRINT_IP_FONT = Fonts.PRINT_IP_FONT
 
 #prints who won
 def win(WIN, winner, HEIGHT):
@@ -97,31 +97,31 @@ def main(WIN, RES, FPS, IP):
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return
 
-        #sends the y position and returns the atrobutes
+        #sends the y position and returns the attributes
         keys_pressed = pygame.key.get_pressed()# gets all the keys
         
-        if keys_pressed[Settings.Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
+        if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
             moveUp = True
-        elif keys_pressed[Settings.Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
+        elif keys_pressed[Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
             moveUp = False
 
-        atrobutes = n.send(moveUp)# sends if it is moveing up and receves the data
+        attributes = n.send(moveUp)# sends if it is moveing up and receves the data
 
         #if it is 1 then player 1 wins
-        if atrobutes == 1:
+        if attributes == 1:
             win(WIN, "player1", HEIGHT)
             break
         # if it is 2 then player 2 wins
-        elif atrobutes == 2:
+        elif attributes == 2:
             win(WIN, "player2", HEIGHT)
             break
         # if it is exit then exit
-        elif atrobutes == 0:
+        elif attributes == 0:
             break
 
         #renders the fonts
-        p1Score_text = SCORE_FONT.render(str(atrobutes["points"][0]), 1, (255, 255, 255))
-        p2Score_text = SCORE_FONT.render(str(atrobutes["points"][1]), 1, (255, 255, 255))
+        p1Score_text = SCORE_FONT.render(str(attributes["points"][0]), 1, (255, 255, 255))
+        p2Score_text = SCORE_FONT.render(str(attributes["points"][1]), 1, (255, 255, 255))
 
         #sets up the screen
         WIN.fill((0, 0, 0))
@@ -131,8 +131,8 @@ def main(WIN, RES, FPS, IP):
         WIN.blit(p1Score_text, (WIDTH/2-55, 0))
         WIN.blit(p2Score_text, (WIDTH/2+20, 0))
         #makes the objects
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p1XPos, atrobutes["yourP"], 20, 100))
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p2XPos, atrobutes["otherP"], 20, 100))
-        pygame.draw.circle(WIN, (255, 255, 255), (atrobutes["ball"][0], atrobutes["ball"][1]), 20)
+        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p1XPos, attributes["yourP"], 20, 100))
+        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p2XPos, attributes["otherP"], 20, 100))
+        pygame.draw.circle(WIN, (255, 255, 255), (attributes["ball"][0], attributes["ball"][1]), 20)
 
         pygame.display.update()# updates the display

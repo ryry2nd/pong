@@ -4,14 +4,14 @@ defines the input letters class
 #imports
 import pygame
 from online import getLocalIp
-from Assets.gameCode.game.settings import Settings
+from Assets.gameCode.game.settings import *
 
 #init
 pygame.init()
 pygame.font.init()
 
 #inputletters
-INPUT_FONT = Settings.Fonts.INPUT_FONT
+INPUT_FONT = Fonts.INPUT_FONT
 
 ip = '.'.join(getLocalIp.main().split('.')[0:3])+'.' # pulls local ip and removes last numbers
 

@@ -3,14 +3,14 @@ defines what happions when you click a window
 """
 #imports
 import pygame
-from Assets.gameCode.game.settings import Settings
+from Assets.gameCode.game.settings import *
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #fonts
-DEFAULT_FONT = Settings.Fonts.DEFAULT_FONT
+DEFAULT_FONT = Fonts.DEFAULT_FONT
 
 #defines what happens when you click a window
 def clickWindow(WIN, POS, l1, l2=""):

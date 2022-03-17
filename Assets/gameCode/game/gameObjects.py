@@ -12,11 +12,12 @@ pygame.font.init()
 class Paddle:
     VEL = 6# this is the velocity of the paddle
     #initialise the vars
-    def __init__(self, size, POS):
-        self.WIDTH = size[0]#defines the width
-        self.HEIGHT = size[1]#defines the height
+    def __init__(self, POS):
+        self.WIDTH = 20#defines the width
+        self.HEIGHT = 100#defines the height
         self.x = POS[0]#defines the xpos
         self.y = POS[1]#defines the ypos
+
     #moves the paddle
     def move(self, directionIsUp, HEIGHT):
         # runs when it is going up and in bounds
@@ -25,6 +26,7 @@ class Paddle:
         #runs when it is going down and is in bounds
         elif not(directionIsUp) and self.y + self.VEL + self.HEIGHT < HEIGHT:
             self.y += self.VEL#moves the paddle
+
     # makes the paddle
     def make_it(self, WIN):
         PADDLE = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
@@ -37,8 +39,8 @@ class Ball:
     yVel = 0
 
     # init vars
-    def __init__(self, size, POS, RES):
-        self.size = size#defines the size
+    def __init__(self, POS, RES):
+        self.size = 20#defines the size
         self.x = POS[0]#defines the xpos
         self.y = POS[1]#defines the ypos
         #defines the screen res
@@ -60,8 +62,14 @@ class Ball:
 
         for player in players:# loops through the paddles
             if BALL.colliderect(pygame.Rect(player.x, player.y, player.WIDTH, player.HEIGHT)):# runs when there is a colision
+                #if player.x == BALL.x:
+                #    if player.y < 0:
+                #        player.y += 1
+                #    else:
+                #        player.y -= 1
+
                 self.xVel =- self.xVel# reverses the balls x vel
-                self.yVel =- ((((player.y + (player.HEIGHT // 2)) - self.y) - 10) // 10)# sets the y level based on where it hits the paddle
+                self.yVel =- ((((player.y + (player.HEIGHT // 2)) - self.y) - player.WIDTH // 2) // 10)# sets the y level based on where it hits the paddle
                 
                 # make the ball faster
                 if self.xVel > 0:

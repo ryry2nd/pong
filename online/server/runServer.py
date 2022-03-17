@@ -41,9 +41,9 @@ def main(RES):
     s.listen(2)
 
     #inits the objects
-    objects = [Paddle((20, 100), (60, HEIGHT // 2 - 50)),#player 1
-        Paddle((20, 100), (WIDTH - 70, HEIGHT // 2 - 50)),# player 2
-        Ball(20, (WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]# ball
+    objects = [Paddle((60, HEIGHT // 2 - 50)),#player 1
+        Paddle((WIDTH - 70, HEIGHT // 2 - 50)),# player 2
+        Ball((WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]# ball
     
     #sets the vars
     connecting = True

@@ -4,14 +4,14 @@ gets the server
 #imports
 import pygame
 from Assets.gameCode.gui import inputIp
-from Assets.gameCode.game.settings import Settings
+from Assets.gameCode.game.settings import *
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #fonts
-SERVER_TEXT = Settings.Fonts.SERVER_FONT.render(
+SERVER_TEXT = Fonts.SERVER_FONT.render(
     str("Chose the IP of the player you want to join"), 1, (255, 255, 255))
 
 #defines main function
