@@ -45,7 +45,7 @@ def main(WIN, RES, FPS):
         WIN.fill((0, 0, 0))#fill the screen
 
         #adds the text
-        WIN.blit(SERVER_TEXT, (0, HEIGHT//2 - 100))
-        inputL.placeText(WIN, (0, HEIGHT//2 - 200))
+        WIN.blit(SERVER_TEXT, (0, HEIGHT/2 - 100))
+        inputL.placeText(WIN, (0, HEIGHT/2 - 200))
 
         pygame.display.update()#updates the display

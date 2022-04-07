@@ -41,9 +41,9 @@ def main(RES):
     s.listen(2)
 
     #inits the objects
-    objects = [Paddle((60, HEIGHT // 2 - 50)),#player 1
-        Paddle((WIDTH - 70, HEIGHT // 2 - 50)),# player 2
-        Ball((WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))]# ball
+    objects = [Paddle((60, HEIGHT / 2 - 50)),#player 1
+        Paddle((WIDTH - 70, HEIGHT / 2 - 50)),# player 2
+        Ball((WIDTH/2 - 10, HEIGHT/2 - 10))]# ball
     
     #sets the vars
     connecting = True
@@ -75,10 +75,10 @@ def main(RES):
     while run:
         #resets the vars
         runFrame = True
-        objects[0].y = HEIGHT // 2 - 50
-        objects[1].y = HEIGHT // 2 - 50
-        objects[2].x = WIDTH // 2 - 10
-        objects[2].y = HEIGHT // 2 - 10
+        objects[0].rect.y = HEIGHT / 2 - 50
+        objects[1].rect.y = HEIGHT / 2 - 50
+        objects[2].rect.x = WIDTH / 2 - 10
+        objects[2].rect.y = HEIGHT / 2 - 10
         objects[2].yVel = 0
 
         #says where the ball goes
@@ -110,17 +110,17 @@ def main(RES):
                 break
 
             # defines the reply's
-            replyP1 = {"otherP": (objects[1].y),"yourP": (objects[0].y), "points": points, "ball": (objects[2].x, objects[2].y)}
-            replyP2 = {"otherP": (objects[0].y),"yourP": (objects[1].y), "points": points, "ball": (objects[2].x, objects[2].y)}
+            replyP1 = {"otherP": (objects[1].rect.y),"yourP": (objects[0].rect.y), "points": points, "ball": (objects[2].rect.x, objects[2].rect.y)}
+            replyP2 = {"otherP": (objects[0].rect.y),"yourP": (objects[1].rect.y), "points": points, "ball": (objects[2].rect.x, objects[2].rect.y)}
 
-            if objects[2].x < 0: # if the ball is on the left increase the score by 1 and restart
+            if objects[2].rect.x < 0: # if the ball is on the left increase the score by 1 and restart
                 points[1] += 1
                 runFrame = False
-            elif objects[2].x + objects[2].size > WIDTH:# if the ball is on the right increase the score by 1 and restart
+            elif objects[2].rect.x + objects[2].rect.width > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 points[0] += 1
                 runFrame = False
 
-            objects[2].move((objects[0], objects[1]))# move the ball
+            objects[2].move((objects[0], objects[1]), HEIGHT)# move the ball
 
             #sends the reply's
             playerConn[0].sendall(pickle.dumps(replyP1))

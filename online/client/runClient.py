@@ -23,7 +23,7 @@ PRINT_IP_FONT = Fonts.PRINT_IP_FONT
 #prints who won
 def win(WIN, winner, HEIGHT):
     WIN.fill((0, 0, 0))
-    WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
+    WIN.blit(WIN_FONT.render(winner + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT/2 - 50))
     pygame.display.update()
     pygame.time.delay(3000)
 
@@ -125,14 +125,14 @@ def main(WIN, RES, FPS, IP):
 
         #sets up the screen
         WIN.fill((0, 0, 0))
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
+        pygame.draw.rect(WIN, (255, 255, 255), (WIDTH/2, 0, 10, HEIGHT))
 
         #makes the score
         WIN.blit(p1Score_text, (WIDTH/2-55, 0))
         WIN.blit(p2Score_text, (WIDTH/2+20, 0))
         #makes the objects
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p1XPos, attributes["yourP"], 20, 100))
-        pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(p2XPos, attributes["otherP"], 20, 100))
-        pygame.draw.circle(WIN, (255, 255, 255), (attributes["ball"][0], attributes["ball"][1]), 20)
+        pygame.draw.rect(WIN, (255, 255, 255), (p1XPos, attributes["yourP"], 20, 100))
+        pygame.draw.rect(WIN, (255, 255, 255), (p2XPos, attributes["otherP"], 20, 100))
+        pygame.draw.rect(WIN, (255, 255, 255), (attributes["ball"][0], attributes["ball"][1], 20, 20))
 
         pygame.display.update()# updates the display

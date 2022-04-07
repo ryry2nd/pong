@@ -28,7 +28,7 @@ def checkWin(WIN, HEIGHT):
     
     if win:# if there is a win print it out and update the screen
         WIN.fill((0, 0, 0))
-        WIN.blit(WIN_FONT.render(win + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT//2 - 50))
+        WIN.blit(WIN_FONT.render(win + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT/2 - 50))
         pygame.display.update()
         pygame.time.delay(3000)
     
@@ -50,9 +50,9 @@ def main(WIN, RES, FPS):
     HEIGHT = RES[1]
 
     #init objects
-    PLAYER1 = Paddle((60, HEIGHT // 2 - 50))
-    PLAYER2 = Paddle((WIDTH - 70, HEIGHT // 2 - 50))
-    BALL = Ball((WIDTH//2 - 10, HEIGHT//2 - 10), (WIDTH, HEIGHT))
+    PLAYER1 = Paddle((60, HEIGHT / 2 - 50))
+    PLAYER2 = Paddle((WIDTH - 70, HEIGHT / 2 - 50))
+    BALL = Ball((WIDTH/2 - 10, HEIGHT/2 - 10))
 
     #init vars
     run = True
@@ -61,10 +61,10 @@ def main(WIN, RES, FPS):
     while run:# runs every round
         #reset vars
         runFrame = True
-        PLAYER1.y = HEIGHT // 2 - 50
-        PLAYER2.y = HEIGHT // 2 - 50
-        BALL.x = WIDTH // 2 - 10
-        BALL.y = HEIGHT // 2 - 10
+        PLAYER1.rect.y = HEIGHT / 2 - 50
+        PLAYER2.rect.y = HEIGHT / 2 - 50
+        BALL.rect.x = WIDTH / 2 - 10
+        BALL.rect.y = HEIGHT / 2 - 10
         BALL.yVel = 0
 
         #gets the ball starting vel
@@ -90,21 +90,20 @@ def main(WIN, RES, FPS):
                         return False
             
             keys_pressed = pygame.key.get_pressed()# gets all the keys
-            ballrect = pygame.Rect(BALL.x, BALL.y, BALL.size, BALL.size)
 
             if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
-                PLAYER1.move(True, HEIGHT, ballrect)
+                PLAYER1.move(True, HEIGHT)
             if keys_pressed[Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
-                PLAYER1.move(False, HEIGHT, ballrect)
+                PLAYER1.move(False, HEIGHT)
             if keys_pressed[Key_Binds.PLAYER2_UP]:# moves player2 up if in bounds
-                PLAYER2.move(True, HEIGHT, ballrect)
+                PLAYER2.move(True, HEIGHT)
             if keys_pressed[Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
-                PLAYER2.move(False, HEIGHT, ballrect)
+                PLAYER2.move(False, HEIGHT)
 
-            if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart
+            if BALL.rect.left < 0: # if the ball is on the left increase the score by 1 and restart
                 p2Points += 1
                 runFrame = False
-            elif BALL.x + BALL.size > WIDTH:# if the ball is on the right increase the score by 1 and restart
+            elif BALL.rect.right > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 p1Points += 1
                 runFrame = False
 
@@ -114,9 +113,9 @@ def main(WIN, RES, FPS):
 
             #makes the background
             WIN.fill((0, 0, 0))
-            pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH//2, 0, 10, HEIGHT))
+            pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH/2, 0, 10, HEIGHT))
 
-            BALL.move((PLAYER1, PLAYER2)) #move the ball
+            BALL.move((PLAYER1, PLAYER2), HEIGHT) #move the ball
 
             #makes the objects
             PLAYER1.make_it(WIN)
@@ -125,8 +124,8 @@ def main(WIN, RES, FPS):
 
             #makes the score
 
-            WIN.blit(p1Score_text, (WIDTH/2-60, 0))
-            WIN.blit(p2Score_text, (WIDTH/2+20, 0))
+            WIN.blit(p1Score_text, (WIDTH / 2-60, 0))
+            WIN.blit(p2Score_text, (WIDTH / 2+20, 0))
 
             pygame.display.update()# updates the display
             
