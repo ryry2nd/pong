@@ -90,15 +90,16 @@ def main(WIN, RES, FPS):
                         return False
             
             keys_pressed = pygame.key.get_pressed()# gets all the keys
-            
+            ballrect = pygame.Rect(BALL.x, BALL.y, BALL.size, BALL.size)
+
             if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
-                PLAYER1.move(True, HEIGHT)
+                PLAYER1.move(True, HEIGHT, ballrect)
             if keys_pressed[Key_Binds.PLAYER1_DOWN]:# moves player1 down if in bounds
-                PLAYER1.move(False, HEIGHT)
+                PLAYER1.move(False, HEIGHT, ballrect)
             if keys_pressed[Key_Binds.PLAYER2_UP]:# moves player2 up if in bounds
-                PLAYER2.move(True, HEIGHT)
+                PLAYER2.move(True, HEIGHT, ballrect)
             if keys_pressed[Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
-                PLAYER2.move(False, HEIGHT)
+                PLAYER2.move(False, HEIGHT, ballrect)
 
             if BALL.x < 0: # if the ball is on the left increase the score by 1 and restart
                 p2Points += 1

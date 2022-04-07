@@ -19,13 +19,16 @@ class Paddle:
         self.y = POS[1]#defines the ypos
 
     #moves the paddle
-    def move(self, directionIsUp, HEIGHT):
-        # runs when it is going up and in bounds
-        if directionIsUp and self.y - self.VEL > 0:
-            self.y -= self.VEL# moves the paddle
-        #runs when it is going down and is in bounds
-        elif not(directionIsUp) and self.y + self.VEL + self.HEIGHT < HEIGHT:
-            self.y += self.VEL#moves the paddle
+    def move(self, directionIsUp, HEIGHT, BALL_Rect):
+        paddle = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
+        print(paddle.colliderect(BALL_Rect))
+        if not paddle.colliderect(BALL_Rect):
+            # runs when it is going up and in bounds
+            if directionIsUp and self.y - self.VEL > 0:
+                self.y -= self.VEL# moves the paddle
+            #runs when it is going down and is in bounds
+            elif not(directionIsUp) and self.y + self.VEL + self.HEIGHT < HEIGHT:
+                self.y += self.VEL#moves the paddle
 
     # makes the paddle
     def make_it(self, WIN):
@@ -62,11 +65,6 @@ class Ball:
 
         for player in players:# loops through the paddles
             if BALL.colliderect(pygame.Rect(player.x, player.y, player.WIDTH, player.HEIGHT)):# runs when there is a colision
-                #if player.x == BALL.x:
-                #    if player.y < 0:
-                #        player.y += 1
-                #    else:
-                #        player.y -= 1
 
                 self.xVel =- self.xVel# reverses the balls x vel
                 self.yVel =- ((((player.y + (player.HEIGHT // 2)) - self.y) - player.WIDTH // 2) // 10)# sets the y level based on where it hits the paddle
