@@ -130,6 +130,7 @@ def main(WIN, RES, FPS, IP):
         #makes the score
         WIN.blit(p1Score_text, (WIDTH/2-55, 0))
         WIN.blit(p2Score_text, (WIDTH/2+20, 0))
+        
         #makes the objects
         pygame.draw.rect(WIN, (255, 255, 255), (p1XPos, attributes["yourP"], 20, 100))
         pygame.draw.rect(WIN, (255, 255, 255), (p2XPos, attributes["otherP"], 20, 100))

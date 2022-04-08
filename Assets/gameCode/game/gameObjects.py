@@ -16,13 +16,14 @@ class Paddle:
         self.rect = pygame.Rect(POS[0], POS[1], 20, 100)#makes the rectangle
 
     #moves the paddle
-    def move(self, directionIsUp, HEIGHT):
+    def move(self, directionIsUp, HEIGHT, BALL):
+        print(BALL.colliderect(self.rect))
         # runs when it is going up and in bounds
         if directionIsUp and self.rect.top > 0:
-            self.rect.move_ip(0, -self.VEL)# moves the paddle
+            self.rect.y -= self.VEL# moves the paddle
         #runs when it is going down and is in bounds
         elif not(directionIsUp) and self.rect.bottom < HEIGHT:
-            self.rect.move_ip(0, self.VEL)#moves the paddle
+            self.rect.y += self.VEL#moves the paddle
 
     # draws the paddle
     def make_it(self, WIN):
@@ -48,12 +49,12 @@ class Ball:
             #sets the colision
             # bounces off the walls
             if self.rect.y + self.yVel <= 0 or self.rect.y + self.yVel >= HEIGHT - self.rect.height:
-                self.yVel = -self.yVel
+                self.yVel *= -1
 
             for player in players:# loops through the paddles
-                if self.rect.colliderect(player.rect):# runs when there is a colision
+                if self.rect.colliderect(player):# runs when there is a colision
                     self.xVel =- self.xVel# reverses the balls x vel
-                    self.yVel =- ((((player.rect.y + (player.rect.height / 2)) - self.rect.y) - player.rect.width / 2) / 10)# sets the y level based on where it hits the paddle
+                    self.yVel =- ((((player.y + (player.height / 2)) - self.rect.y) - player.width / 2) / 10)# sets the y level based on where it hits the paddle
                     
                     # make the ball faster
                     if self.xVel > 0:
