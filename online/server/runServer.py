@@ -91,10 +91,12 @@ def main(RES):
 
         # loops every frame
         while runFrame:
+            collided = objects[2].move((objects[0].rect, objects[1].rect), HEIGHT)# move the ball
+
             try:
                 p1 = pickle.loads(playerConn[0].recv(4))
                 if p1 != None:# if it is not getting nothing, move the paddle
-                    objects[0].move(p1, HEIGHT)
+                    objects[0].move(p1, HEIGHT, objects[2].rect, collided)
             except EOFError:# if the person disconnected, send the disconnect code and quit
                 playerConn[1].sendall(pickle.dumps(0))
                 run = False
@@ -103,7 +105,7 @@ def main(RES):
             try:
                 p2 = pickle.loads(playerConn[1].recv(4))
                 if p2 != None:# if it is not getting nothing, move the paddle
-                    objects[1].move(p2, HEIGHT)
+                    objects[1].move(p2, HEIGHT, objects[2].rect, collided)
             except EOFError:# if the person disconnected, send the disconnect code and quit
                 playerConn[0].sendall(pickle.dumps(0))
                 run = False
@@ -119,8 +121,6 @@ def main(RES):
             elif objects[2].rect.x + objects[2].rect.width > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 points[0] += 1
                 runFrame = False
-
-            objects[2].move((objects[0], objects[1]), HEIGHT)# move the ball
 
             #sends the reply's
             playerConn[0].sendall(pickle.dumps(replyP1))
