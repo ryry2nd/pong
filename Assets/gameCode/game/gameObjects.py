@@ -16,14 +16,22 @@ class Paddle:
         self.rect = pygame.Rect(POS[0], POS[1], 20, 100)#makes the rectangle
 
     #moves the paddle
-    def move(self, directionIsUp, HEIGHT, BALL):
-        print(BALL.colliderect(self.rect))
-        # runs when it is going up and in bounds
-        if directionIsUp and self.rect.top > 0:
-            self.rect.y -= self.VEL# moves the paddle
-        #runs when it is going down and is in bounds
-        elif not(directionIsUp) and self.rect.bottom < HEIGHT:
-            self.rect.y += self.VEL#moves the paddle
+    def move(self, directionIsUp, HEIGHT, BALL, collided):
+        if collided:
+            if round(BALL.bottom, -1) == round(self.rect.top, -1):
+                self.rect.y += self.VEL
+            elif round(BALL.top, -1) == round(self.rect.bottom, -1):
+                self.rect.y -= self.VEL
+        else:
+            # runs when it is going up and in bounds
+            if directionIsUp and self.rect.top > 0:
+                self.rect.y -= self.VEL# moves the paddle
+            #runs when it is going down and is in bounds
+            elif not(directionIsUp) and self.rect.bottom < HEIGHT:
+                self.rect.y += self.VEL#moves the paddle
+        
+        
+
 
     # draws the paddle
     def make_it(self, WIN):
@@ -45,6 +53,7 @@ class Ball:
 
     # moves the ball
     def move(self, players, HEIGHT):
+        ret=False
         for i in range(abs(self.xVel)):#loops through the ball's xVel and adds 1 to the position
             #sets the colision
             # bounces off the walls
@@ -61,7 +70,10 @@ class Ball:
                         self.xVel += 1
                     else:
                         self.xVel -= 1
-    
+
+                    ret = True
+                    break #breaks out of the for loop
+            
             #moves the ball's xpos by 1
             if self.xVel > 0:
                 self.rect.x += 1
@@ -69,3 +81,5 @@ class Ball:
                 self.rect.x -= 1
         
         self.rect.y += self.yVel
+
+        return ret
