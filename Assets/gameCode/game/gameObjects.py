@@ -37,7 +37,6 @@ class Paddle:
 #ball object
 class Ball:
     #def vars
-    hitLast = False
     xVel = 0
     yVel = 0
 
@@ -67,11 +66,10 @@ class Ball:
                     self.yVel =- ((((player.y + (player.height / 2)) - self.rect.y) - player.width / 2) / 10)
                     
                     # make the ball faster
-                    if not self.hitLast:
-                        if self.xVel > 0:
-                            self.xVel += 1
-                        else:
-                            self.xVel -= 1
+                    if self.xVel > 0:
+                        self.xVel += 1
+                    else:
+                        self.xVel -= 1
 
                     collided = True#if it collided it sets the variable to true
                     break #breaks out of the for loop
@@ -83,11 +81,4 @@ class Ball:
                 self.rect.x -= 1
         
         self.rect.y += self.yVel# adds the ball to the yVel
-
-        if collided:
-            self.hitLast = True
-        else:
-            self.hitLast = False
-
-        print(abs(self.xVel), self.hitLast)
         return collided#returns the velocity
