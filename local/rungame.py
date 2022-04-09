@@ -89,8 +89,6 @@ def main(WIN, RES, FPS):
                         restartPoints()
                         return False
             
-            #BALL.rect.x = 60
-            #BALL.rect.y = 100
             collided = BALL.move((PLAYER1.rect, PLAYER2.rect), HEIGHT) #move the ball
 
             keys_pressed = pygame.key.get_pressed()# gets all the keys
@@ -125,7 +123,6 @@ def main(WIN, RES, FPS):
             BALL.make_it(WIN)
 
             #makes the score
-
             WIN.blit(p1Score_text, (WIDTH / 2-60, 0))
             WIN.blit(p2Score_text, (WIDTH / 2+20, 0))
 
