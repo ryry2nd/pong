@@ -115,7 +115,7 @@ def main(WIN, RES, FPS):
 
             #makes the background
             WIN.fill((0, 0, 0))
-            pygame.draw.rect(WIN, (255, 255, 255), pygame.Rect(WIDTH/2, 0, 10, HEIGHT))
+            pygame.draw.rect(WIN, (255, 255, 255), (WIDTH/2, 0, 10, HEIGHT))
 
             #makes the objects
             PLAYER1.make_it(WIN)
