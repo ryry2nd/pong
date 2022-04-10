@@ -28,3 +28,8 @@ class Key_Binds:
     PLAYER1_DOWN = pygame.K_s
     PLAYER2_UP = pygame.K_UP
     PLAYER2_DOWN = pygame.K_DOWN
+
+#defines the other variables
+class Miscellaneous:
+    FPS = 60
+    WIDTH, HEIGHT = 900, 500

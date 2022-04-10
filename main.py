@@ -12,21 +12,22 @@ import online.client.getServer as getServer
 from Assets.gameCode.gui.countDown import countDown
 from Assets.gameCode.gui.clickWindow import clickWindow
 from Assets.gameCode.gui.restartButton import restartButton
+from Assets.gameCode.game.settings import *
 
 #inits
 pygame.init()
 pygame.font.init()
 
 #constints
-WIDTH, HEIGHT = 900, 500
-FPS = 60
+WIDTH, HEIGHT = Miscellaneous.WIDTH, Miscellaneous.HEIGHT
+FPS = Miscellaneous.FPS
 
 #set window
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong")
 pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'Icon.png')))
 
-#main function 
+#main function
 def main():
     run = True
     clock = pygame.time.Clock()#defines a clock
