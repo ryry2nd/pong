@@ -2,7 +2,7 @@
 runs the client code
 """
 #imports
-import pygame
+import pygame, sys
 from online.client.network import Network
 from Assets.gameCode.errors import error
 from online import getLocalIp
@@ -63,7 +63,7 @@ def main(WIN, RES, FPS, IP):
                 run = False
                 n.send(True)#tells the server to quit
                 pygame.quit()
-                exit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
@@ -91,7 +91,7 @@ def main(WIN, RES, FPS, IP):
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
                 pygame.quit()
-                exit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape

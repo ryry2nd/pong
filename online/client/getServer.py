@@ -2,7 +2,7 @@
 gets the server
 """
 #imports
-import pygame
+import pygame, sys
 from Assets.gameCode.gui import inputIp
 from Assets.gameCode.game.settings import *
 
@@ -33,7 +33,7 @@ def main(WIN, RES, FPS):
             if event.type == pygame.QUIT:#if it is quit, quit
                 run = False
                 pygame.quit()
-                exit()
+                sys.exit()
             elif event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                     return False

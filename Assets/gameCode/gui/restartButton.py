@@ -3,7 +3,7 @@ makes the restart button
 """
 #imports
 from Assets.gameCode.gui.clickWindow import clickWindow
-import pygame
+import pygame, sys
 
 #defines the restart button
 def restartButton(WIN, RES, FPS):
@@ -20,7 +20,7 @@ def restartButton(WIN, RES, FPS):
         clock.tick(FPS)# fps
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
-                exit()
+                sys.exit()
 
             elif event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape

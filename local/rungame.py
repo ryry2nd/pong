@@ -2,7 +2,7 @@
 runs the local game
 """
 #imports
-import pygame, random
+import pygame, random, sys
 from Assets.gameCode.game.gameObjects import Paddle, Ball
 from Assets.gameCode.game.settings import *
 
@@ -82,7 +82,7 @@ def main(WIN, RES, FPS):
                 if event.type == pygame.QUIT:#if it is quit, quit
                     run = False
                     pygame.quit()
-                    exit()
+                    sys.exit()
 
                 if event.type == pygame.KEYDOWN:# runs when a key is pressed
                     if event.key == pygame.K_ESCAPE:# if escape is pressed, escape

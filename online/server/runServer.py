@@ -2,7 +2,7 @@
 starts the server
 """
 #imports
-import socket, pickle, random
+import socket, pickle, random, sys
 from threading import Thread
 from online import getLocalIp
 from Assets.gameCode.game.gameObjects import Paddle, Ball
@@ -16,7 +16,7 @@ def waiting(conn, s):
         if pickle.loads(conn.recv(4)):# is True the reply is True
             conn.sendall(pickle.dumps(None))# sends the client nothing
             s.close()# closes the server
-            exit()
+            sys.exit()
         conn.sendall(pickle.dumps(True))# sends the client True because it is still connecting
     conn.sendall(pickle.dumps(False))# sends it False because it is done connecting
 
@@ -56,7 +56,7 @@ def main(RES):
         try:# if the s socket is closed, quit
             conn, addr = s.accept()# gets the client
         except OSError:
-            exit()
+            sys.exit()
 
         playerConn.append(conn)# appends the players connection
         
