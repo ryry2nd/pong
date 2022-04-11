@@ -123,8 +123,8 @@ def main(WIN, RES, FPS):
             BALL.make_it(WIN)
 
             #makes the score
-            WIN.blit(p1Score_text, (WIDTH / 2-60, 0))
-            WIN.blit(p2Score_text, (WIDTH / 2+20, 0))
+            WIN.blit(p1Score_text, (WIDTH / 2 - 60, 0))
+            WIN.blit(p2Score_text, (WIDTH / 2 + 20, 0))
 
             pygame.display.update()# updates the display
             
