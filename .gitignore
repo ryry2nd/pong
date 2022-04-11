@@ -133,3 +133,4 @@ dmypy.json
 .replit
 poetry.lock
 pyproject.toml
+output
