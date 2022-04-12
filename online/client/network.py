@@ -3,6 +3,7 @@ defines the network class
 """
 #imports
 import socket, pickle
+from Assets.gameCode.game.settings import *
 
 #defines Network class
 class Network:
@@ -16,7 +17,7 @@ class Network:
         #defines the server ip
         self.server = ip
         #defines the port
-        self.port = 5555
+        self.port = Miscellaneous.PORT
         #defines the address
         self.addr = (self.server, self.port)
         #defines the player

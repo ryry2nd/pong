@@ -5,6 +5,7 @@ starts the server
 import socket, pickle, random, sys
 from threading import Thread
 from online import getLocalIp
+from Assets.gameCode.game.settings import *
 from Assets.gameCode.game.gameObjects import Paddle, Ball
 
 #is only true if it is connecting
@@ -31,7 +32,7 @@ def main(RES):
 
     #gets the ip and host name
     server = getLocalIp.main()
-    port = 5555
+    port = Miscellaneous.PORT
 
     #defines the socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

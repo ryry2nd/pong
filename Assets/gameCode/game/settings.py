@@ -33,3 +33,4 @@ class Key_Binds:
 class Miscellaneous:
     FPS = 60
     WIDTH, HEIGHT = 900, 500
+    PORT = 2530
