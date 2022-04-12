@@ -74,7 +74,6 @@ def main(RES):
     #game loop
     while True:
         #resets the vars
-        runFrame = True
         objects[0].rect.y = HEIGHT / 2 - 50
         objects[1].rect.y = HEIGHT / 2 - 50
         objects[2].rect.x = WIDTH / 2 - 10
@@ -90,7 +89,7 @@ def main(RES):
             objects[2].xVel = random.choice([-3,3])# default vel
 
         # loops every frame
-        while runFrame:
+        while True:
             collided = objects[2].move((objects[0].rect, objects[1].rect), HEIGHT)# move the ball
 
             try:
@@ -119,14 +118,17 @@ def main(RES):
 
             if objects[2].rect.x < 0: # if the ball is on the left increase the score by 1 and restart
                 points[1] += 1
-                runFrame = False
+                break
             elif objects[2].rect.x + objects[2].rect.width > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 points[0] += 1
-                runFrame = False
+                break
 
             #sends the reply's
             playerConn[0].sendall(pickle.dumps(replyP1))
             playerConn[1].sendall(pickle.dumps(replyP2))
+            
+        playerConn[0].sendall(pickle.dumps(replyP1))
+        playerConn[1].sendall(pickle.dumps(replyP2))
         
         if points[0] >= 7:# if player1's points are >= 7 then player 1 wins
             playerConn[0].recv(4)
