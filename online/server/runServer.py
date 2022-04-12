@@ -50,7 +50,6 @@ def main(RES):
     connecting = True
     playerConn = []
     points = [0, 0]
-    run = True
     
     #connects the variables
     for i in range(2):
@@ -75,7 +74,6 @@ def main(RES):
     #game loop
     while run:
         #resets the vars
-        runFrame = True
         objects[0].rect.y = HEIGHT / 2 - 50
         objects[1].rect.y = HEIGHT / 2 - 50
         objects[2].rect.x = WIDTH / 2 - 10
@@ -91,7 +89,7 @@ def main(RES):
             objects[2].xVel = random.choice([-3,3])# default vel
 
         # loops every frame
-        while runFrame:
+        while True:
             collided = objects[2].move((objects[0].rect, objects[1].rect), HEIGHT)# move the ball
 
             try:
@@ -100,7 +98,9 @@ def main(RES):
                     objects[0].move(p1, HEIGHT, objects[2].rect, collided)
             except EOFError:# if the person disconnected, send the disconnect code and quit
                 playerConn[1].sendall(pickle.dumps(0))
-                run = False
+                # closes the connection
+                playerConn[0].close()
+                playerConn[1].close()
                 break
             
             try:
@@ -109,7 +109,9 @@ def main(RES):
                     objects[1].move(p2, HEIGHT, objects[2].rect, collided)
             except EOFError:# if the person disconnected, send the disconnect code and quit
                 playerConn[0].sendall(pickle.dumps(0))
-                run = False
+                # closes the connection
+                playerConn[0].close()
+                playerConn[1].close()
                 break
 
             # defines the reply's
@@ -118,10 +120,10 @@ def main(RES):
 
             if objects[2].rect.x < 0: # if the ball is on the left increase the score by 1 and restart
                 points[1] += 1
-                runFrame = False
+                break
             elif objects[2].rect.x + objects[2].rect.width > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 points[0] += 1
-                runFrame = False
+                break
 
             #sends the reply's
             playerConn[0].sendall(pickle.dumps(replyP1))
@@ -133,15 +135,11 @@ def main(RES):
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(1))
             playerConn[1].sendall(pickle.dumps(1))
-            run = False
+            return
         elif points[1] >= 7:# if player2's points are >= 7 then player 2 wins
             playerConn[0].recv(4)
             playerConn[1].recv(4)
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(2))
             playerConn[1].sendall(pickle.dumps(2))
-            run = False
-    
-    # closes the connection
-    playerConn[0].close()
-    playerConn[1].close()
+            return

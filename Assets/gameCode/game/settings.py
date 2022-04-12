@@ -2,17 +2,20 @@
 defines the settings
 """
 #imports
-import pygame, os
+import pygame, os, json
 
 """ 
 Blippo Bold was the original font for pong
 or so the internet tells me
 """
 
+#files
+SETTINGS_FILE = json.load(open("settings.json"))
+FONT_FILE = os.path.join('Assets', 'fonts', 'Blippo Bold.ttf')
+SCORE_FONT_FILE = os.path.join('Assets', 'fonts', 'vt323.regular.ttf')
+
 #defines fonts
 class Fonts:
-    FONT_FILE = os.path.join('Assets', 'fonts', 'Blippo Bold.ttf')
-    SCORE_FONT_FILE = os.path.join('Assets', 'fonts', 'vt323.regular.ttf')
     COUNTDOWN_FONT = pygame.font.Font(SCORE_FONT_FILE, 200)
     PRINT_IP_FONT = pygame.font.Font(FONT_FILE, 50)
     ERROR_FONT = pygame.font.Font(FONT_FILE, 20) 
@@ -24,13 +27,13 @@ class Fonts:
 
 #defines the key binds
 class Key_Binds:
-    PLAYER1_UP = pygame.K_w
-    PLAYER1_DOWN = pygame.K_s
-    PLAYER2_UP = pygame.K_UP
-    PLAYER2_DOWN = pygame.K_DOWN
+    PLAYER1_UP = SETTINGS_FILE["keyBinds"]["player1Up"]
+    PLAYER1_DOWN = SETTINGS_FILE["keyBinds"]["player1Down"]
+    PLAYER2_UP = SETTINGS_FILE["keyBinds"]["player2Up"]
+    PLAYER2_DOWN = SETTINGS_FILE["keyBinds"]["player2Down"]
 
 #defines the other variables
 class Miscellaneous:
-    FPS = 60
-    WIDTH, HEIGHT = 900, 500
-    PORT = 2530
+    FPS = SETTINGS_FILE["miscellaneous"]["FPS"]
+    WIDTH, HEIGHT = SETTINGS_FILE["miscellaneous"]["WIDTH"], SETTINGS_FILE["miscellaneous"]["HEIGHT"]
+    PORT = SETTINGS_FILE["miscellaneous"]["PORT"]

@@ -1,0 +1,17 @@
+{
+    "keyBinds":
+    {
+        "player1Up": 119,
+        "player1Down": 115,
+        "player2Up": 1073741906,
+        "player2Down": 1073741905
+    },
+
+    "miscellaneous":
+    {
+        "FPS": 60,
+        "WIDTH": 900,
+        "HEIGHT": 500,
+        "PORT": 2530
+    }
+}

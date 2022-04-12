@@ -2,7 +2,7 @@
 loads the gui
 """
 #imports
-import pygame, os, time
+import pygame, os, time, sys
 from threading import Thread
 import local.rungame as single
 from online import getLocalIp
@@ -29,17 +29,16 @@ pygame.display.set_icon(pygame.image.load(os.path.join('Assets', 'textures', 'Ic
 
 #main function
 def main():
-    run = True
     clock = pygame.time.Clock()#defines a clock
-    while run:
+    while True:
         clock.tick(FPS)
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
-                run = False
+                sys.exit()
 
             elif event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run = False
+                    sys.exit()
 
         WIN.fill((0, 0, 0))# fills the screen
 
@@ -81,8 +80,6 @@ def main():
 
         
         pygame.display.update()#update the display
-    
-    pygame.quit()# quits pygame
 
 #if the code is not being imported run the code
 if __name__ == '__main__':

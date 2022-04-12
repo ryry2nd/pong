@@ -55,12 +55,10 @@ def main(WIN, RES, FPS):
     BALL = Ball((WIDTH/2 - 10, HEIGHT/2 - 10))
 
     #init vars
-    run = True
     clock = pygame.time.Clock()#defines the clock
 
-    while run:# runs every round
+    while True:# runs every round
         #reset vars
-        runFrame = True
         PLAYER1.rect.y = HEIGHT / 2 - 50
         PLAYER2.rect.y = HEIGHT / 2 - 50
         BALL.rect.x = WIDTH / 2 - 10
@@ -75,13 +73,11 @@ def main(WIN, RES, FPS):
         else:
             BALL.xVel = random.choice([-3,3])
 
-        while runFrame:#runs every frame
+        while True:#runs every frame
             clock.tick(FPS)#fps
 
             for event in pygame.event.get():#loops through the events
                 if event.type == pygame.QUIT:#if it is quit, quit
-                    run = False
-                    pygame.quit()
                     sys.exit()
 
                 if event.type == pygame.KEYDOWN:# runs when a key is pressed
@@ -104,11 +100,10 @@ def main(WIN, RES, FPS):
 
             if BALL.rect.left < 0: # if the ball is on the left increase the score by 1 and restart
                 p2Points += 1
-                runFrame = False
+                break
             elif BALL.rect.right > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 p1Points += 1
-                runFrame = False
-
+                break
             #renders the fonts
             p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
             p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
@@ -130,6 +125,5 @@ def main(WIN, RES, FPS):
             
         if checkWin(WIN, HEIGHT):# checks if there is a winner
             restartPoints()
-            run = False
             break
     return True

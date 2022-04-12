@@ -48,7 +48,6 @@ def main(WIN, RES, FPS, IP):
     p2XPos = initObject[1]
 
     #init vars
-    run = True
     connecting = (p1XPos == 60)# is true if it is player 1
     clock = pygame.time.Clock()#defines the clock
 
@@ -60,9 +59,7 @@ def main(WIN, RES, FPS, IP):
         clock.tick(FPS)#fps
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
-                run = False
                 n.send(True)#tells the server to quit
-                pygame.quit()
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed
@@ -83,14 +80,12 @@ def main(WIN, RES, FPS, IP):
     pygame.display.update()
     
     countDown(WIN, WIDTH, HEIGHT)
-    while run:# game loop
+    while True:# game loop
         moveUp = None#restarts the move Up variable
         clock.tick(FPS)#fps
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
-                run = False
-                pygame.quit()
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:# runs when a key is pressed

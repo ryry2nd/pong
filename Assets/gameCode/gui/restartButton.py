@@ -12,11 +12,10 @@ def restartButton(WIN, RES, FPS):
     HEIGHT = RES[1]
 
     #init vars
-    run = True
     clock = pygame.time.Clock()#defines a clock
 
     #game loop
-    while run:
+    while True:
         clock.tick(FPS)# fps
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit
@@ -24,7 +23,7 @@ def restartButton(WIN, RES, FPS):
 
             elif event.type == pygame.KEYDOWN:# runs when a key is pressed
                 if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
-                    run = False
+                    break
 
         WIN.fill((0, 0, 0))# fills the screen
 
