@@ -2,7 +2,7 @@
 defines the ball and paddle classes
 """
 #imports
-import pygame, threading
+import pygame
 
 #inits
 pygame.init()
@@ -47,26 +47,11 @@ class Ball:
     #draws the ball
     def make_it(self, WIN):
         pygame.draw.rect(WIN, (255, 255, 255), self.rect)
-    
-    def ballCollided(self, player):
-        if self.rect.colliderect(player):# runs when there is a colision
-            self.xVel =- self.xVel# reverses the balls x vel
-            # sets the y level based on where it hits the paddle
-            self.yVel =- ((((player.y + (player.height / 2)) - self.rect.y) - player.width / 2) / 10)
-            
-            # make the ball faster
-            if self.xVel > 0:
-                self.xVel += 1
-            else:
-                self.xVel -= 1
-
-            return True#if it collided it returns
 
     # moves the ball
     def move(self, players, HEIGHT):
         #init vars
         collided=False
-        playerThreads = []
 
         for i in range(abs(self.xVel)):#loops through the ball's xVel and adds 1 to the position
             #sets the colision
@@ -75,15 +60,20 @@ class Ball:
                 self.yVel *= -1
 
             for player in players:# loops through the paddles
-                t = threading.Thread(target=self.ballCollided, args=(player, ))#inits the thread
-                t.start()# starts the thread
-                playerThreads.append(t)
-            
-            for i in playerThreads:
-                collided = i.join()
-                if collided:
-                    break
+                if self.rect.colliderect(player):# runs when there is a colision
+                    self.xVel =- self.xVel# reverses the balls x vel
+                    # sets the y level based on where it hits the paddle
+                    self.yVel =- ((((player.y + (player.height / 2)) - self.rect.y) - player.width / 2) / 10)
+                    
+                    # make the ball faster
+                    if self.xVel > 0:
+                        self.xVel += 1
+                    else:
+                        self.xVel -= 1
 
+                    collided = True#if it collided it sets the variable to true
+                    break #breaks out of the for loop
+            
             #moves the ball's xpos by 1
             if self.xVel > 0:
                 self.rect.x += 1
