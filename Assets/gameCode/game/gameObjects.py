@@ -53,14 +53,16 @@ class Ball:
         #init vars
         collided=False
 
+        tempRect = self.rect
+
         for i in range(abs(self.xVel)):#loops through the ball's xVel and adds 1 to the position
             #sets the colision
             # bounces off the walls
-            if self.rect.y + self.yVel <= 0 or self.rect.y + self.yVel >= HEIGHT - self.rect.height:
+            if tempRect.y + self.yVel <= 0 or tempRect.y + self.yVel >= HEIGHT - tempRect.height:
                 self.yVel *= -1
 
             for player in players:# loops through the paddles
-                if self.rect.colliderect(player):# runs when there is a colision
+                if tempRect.colliderect(player):# runs when there is a colision
                     self.xVel *= -1# reverses the balls x vel
                     # sets the y level based on where it hits the paddle
                     self.yVel =- ((((player.y + (player.height / 2)) - self.rect.y) - player.width / 2) / 10)
@@ -76,9 +78,12 @@ class Ball:
             
             #moves the ball's xpos by 1
             if self.xVel > 0:
-                self.rect.x += 1
+                tempRect.x += 1
             else:
-                self.rect.x -= 1
-        
-        self.rect.y += self.yVel# adds the ball to the yVel
+                tempRect.x -= 1
+
+        tempRect.y += self.yVel# adds the ball to the yVel
+
+        self.rect = tempRect
+
         return collided#returns the velocity

@@ -13,7 +13,7 @@ pygame.font.init()
 
 #fonts
 SCORE_FONT = Fonts.SCORE_FONT
-WIN_FONT = Fonts.WIN_FONT 
+WIN_FONT = Fonts.WIN_FONT
 
 # init vars
 p1Points, p2Points = 0, 0
@@ -113,9 +113,10 @@ def main(WIN, RES, FPS):
         else:
             BALL.xVel = random.choice([-3,3])
 
+        ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
+        ballT.start()#starts the ball move thread
+
         while True:#runs every frame
-            ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
-            ballT.start()#starts the ball move thread
 
             clock.tick(Miscellaneous.TICKSPEED)#fps
 
@@ -135,6 +136,8 @@ def main(WIN, RES, FPS):
             keys_pressed = pygame.key.get_pressed()# gets all the keys
 
             collided = ballT.join()
+            ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
+            ballT.start()#starts the ball move thread
 
             if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
                 PLAYER1.move(True, HEIGHT, BALL.rect, collided)
@@ -144,6 +147,7 @@ def main(WIN, RES, FPS):
                 PLAYER2.move(True, HEIGHT, BALL.rect, collided)
             if keys_pressed[Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
                 PLAYER2.move(False, HEIGHT, BALL.rect, collided)
+            
 
             if BALL.rect.left < 0: # if the ball is on the left increase the score by 1 and restart
                 p2Points += 1
