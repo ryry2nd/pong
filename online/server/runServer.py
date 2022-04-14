@@ -7,6 +7,7 @@ from threading import Thread
 from online import getLocalIp
 from Assets.gameCode.game.settings import *
 from Assets.gameCode.game.gameObjects import Paddle, Ball
+from Assets.gameCode.game.threadingButItHasAReturnValueThingAlsoIWonderHowLongICouldMakeThisFileNameSoBlaBlaBlaBlaBlaBlaBlaPeeIsStoredInTheBalls import ThreadWthRet
 
 #is only true if it is connecting
 connecting = True
@@ -87,11 +88,16 @@ def main(RES):
             objects[2].xVel = -3
         else:
             objects[2].xVel = random.choice([-3,3])# default vel
+        
+        ballThread = ThreadWthRet(target=objects[2].move, args=((objects[0].rect, objects[1].rect), HEIGHT, ))#inits ball thread
+        ballThread.start()#starts ball thread
 
         # loops every frame
         while True:
-            collided = objects[2].move((objects[0].rect, objects[1].rect), HEIGHT)# move the ball
-
+            collided = ballThread.join()#gets the threads return value
+            ballThread = ThreadWthRet(target=objects[2].move, args=((objects[0].rect, objects[1].rect), HEIGHT, ))#inits ball thread again
+            ballThread.start()#starts ball thread
+            
             try:
                 p1 = pickle.loads(playerConn[0].recv(4))
                 if p1 != None:# if it is not getting nothing, move the paddle
