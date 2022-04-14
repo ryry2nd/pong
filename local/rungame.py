@@ -2,7 +2,7 @@
 runs the local game
 """
 #imports
-import pygame, random, sys
+import pygame, random, sys, threading
 from Assets.gameCode.game.gameObjects import Paddle, Ball
 from Assets.gameCode.game.settings import *
 
@@ -14,8 +14,9 @@ pygame.font.init()
 SCORE_FONT = Fonts.SCORE_FONT
 WIN_FONT = Fonts.WIN_FONT 
 
-# sets the points
+# init vars
 p1Points, p2Points = 0, 0
+runThread = True
 
 # checks if there is a win
 def checkWin(WIN, HEIGHT):
@@ -36,14 +37,45 @@ def checkWin(WIN, HEIGHT):
 
 #restarts the points
 def restartPoints():
-    global p1Points, p2Points
+    global p1Points, p2Points, runThread
     p1Points, p2Points = 0, 0
+    runThread = True
 
+#updates the display
+def updateDisplay(WIN, RES, objects):
+    #renders the fonts
+    p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
+    p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
+
+    #makes the background
+    WIN.fill((0, 0, 0))
+    pygame.draw.rect(WIN, (255, 255, 255), (RES[0]/2, 0, 10, RES[1]))
+
+    #makes the objects
+    objects[0].make_it(WIN)
+    objects[1].make_it(WIN)
+    objects[2].make_it(WIN)
+
+    #makes the score
+    WIN.blit(p1Score_text, (RES[0] / 2 - 60, 0))
+    WIN.blit(p2Score_text, (RES[0] / 2 + 20, 0))
+
+    pygame.display.update()# updates the display
+
+#defines the display thread
+def updateDisplayThread(WIN, RES, FPS, objects):
+    #init vars
+    clock = pygame.time.Clock()
+
+    #game loop
+    while runThread:
+        clock.tick(FPS)#fps
+        updateDisplay(WIN, RES, objects)#update the display
 
 #main function
 def main(WIN, RES, FPS):
     #get globals
-    global p1Points, p2Points
+    global p1Points, p2Points, runThread
 
     #def width and height
     WIDTH = RES[0]
@@ -53,6 +85,13 @@ def main(WIN, RES, FPS):
     PLAYER1 = Paddle((60, HEIGHT / 2 - 50))
     PLAYER2 = Paddle((WIDTH - 70, HEIGHT / 2 - 50))
     BALL = Ball((WIDTH/2 - 10, HEIGHT/2 - 10))
+    
+    #init thread
+    displayThread = threading.Thread(target=updateDisplayThread, 
+        args=(WIN, (WIDTH, HEIGHT), FPS, (PLAYER1, PLAYER2, BALL), ))
+    
+    #start thread
+    displayThread.start()
 
     #init vars
     clock = pygame.time.Clock()#defines the clock
@@ -74,14 +113,18 @@ def main(WIN, RES, FPS):
             BALL.xVel = random.choice([-3,3])
 
         while True:#runs every frame
-            clock.tick(FPS)#fps
+            clock.tick(60)#fps
 
             for event in pygame.event.get():#loops through the events
-                if event.type == pygame.QUIT:#if it is quit, quit
+                if event.type == pygame.QUIT:#if it is quit, 
+                    runThread = False
+                    displayThread.join()
                     sys.exit()
 
                 if event.type == pygame.KEYDOWN:# runs when a key is pressed
                     if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
+                        runThread = False
+                        displayThread.join()
                         restartPoints()
                         return False
             
@@ -104,26 +147,12 @@ def main(WIN, RES, FPS):
             elif BALL.rect.right > WIDTH:# if the ball is on the right increase the score by 1 and restart
                 p1Points += 1
                 break
-            #renders the fonts
-            p1Score_text = SCORE_FONT.render(str(p1Points), 1, (255, 255, 255))
-            p2Score_text = SCORE_FONT.render(str(p2Points), 1, (255, 255, 255))
 
-            #makes the background
-            WIN.fill((0, 0, 0))
-            pygame.draw.rect(WIN, (255, 255, 255), (WIDTH/2, 0, 10, HEIGHT))
-
-            #makes the objects
-            PLAYER1.make_it(WIN)
-            PLAYER2.make_it(WIN)
-            BALL.make_it(WIN)
-
-            #makes the score
-            WIN.blit(p1Score_text, (WIDTH / 2 - 60, 0))
-            WIN.blit(p2Score_text, (WIDTH / 2 + 20, 0))
-
-            pygame.display.update()# updates the display
-            
         if checkWin(WIN, HEIGHT):# checks if there is a winner
+            # stops the thread
+            runThread = False
+            displayThread.join()
+            #restarts the points
             restartPoints()
             break
     return True
