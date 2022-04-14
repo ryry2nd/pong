@@ -122,7 +122,7 @@ def main(WIN, RES, FPS, IP):
 
     while True:# game loop
         moveUp = None#restarts the move Up variable
-        clock.tick(60)#fps
+        clock.tick(Miscellaneous.TICKSPEED)#fps
 
         for event in pygame.event.get():#loops through the events
             if event.type == pygame.QUIT:#if it is quit, quit

@@ -9,6 +9,7 @@
 
     "miscellaneous":
     {
+        "tickSpeed": 60, 
         "FPS": 60,
         "WIDTH": 900,
         "HEIGHT": 500,

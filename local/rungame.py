@@ -2,6 +2,7 @@
 runs the local game
 """
 #imports
+from tkinter import Misc
 import pygame, random, sys, threading
 from Assets.gameCode.game.gameObjects import Paddle, Ball
 from Assets.gameCode.game.settings import *
@@ -113,7 +114,7 @@ def main(WIN, RES, FPS):
             BALL.xVel = random.choice([-3,3])
 
         while True:#runs every frame
-            clock.tick(60)#fps
+            clock.tick(Miscellaneous.TICKSPEED)#fps
 
             for event in pygame.event.get():#loops through the events
                 if event.type == pygame.QUIT:#if it is quit, 

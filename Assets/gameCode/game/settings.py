@@ -37,3 +37,4 @@ class Miscellaneous:
     FPS = SETTINGS_FILE["miscellaneous"]["FPS"]
     WIDTH, HEIGHT = SETTINGS_FILE["miscellaneous"]["WIDTH"], SETTINGS_FILE["miscellaneous"]["HEIGHT"]
     PORT = SETTINGS_FILE["miscellaneous"]["PORT"]
+    TICKSPEED = SETTINGS_FILE["miscellaneous"]["tickSpeed"]
