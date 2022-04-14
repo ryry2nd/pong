@@ -114,6 +114,9 @@ def main(WIN, RES, FPS):
             BALL.xVel = random.choice([-3,3])
 
         while True:#runs every frame
+            ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
+            ballT.start()#starts the ball move thread
+
             clock.tick(Miscellaneous.TICKSPEED)#fps
 
             for event in pygame.event.get():#loops through the events
@@ -128,10 +131,10 @@ def main(WIN, RES, FPS):
                         displayThread.join()
                         restartPoints()
                         return False
-            
-            collided = BALL.move((PLAYER1.rect, PLAYER2.rect), HEIGHT) #move the ball
 
             keys_pressed = pygame.key.get_pressed()# gets all the keys
+
+            collided = ballT.join()
 
             if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
                 PLAYER1.move(True, HEIGHT, BALL.rect, collided)
