@@ -20,7 +20,8 @@ p1Points, p2Points = 0, 0
 runThread = True
 
 # checks if there is a win
-def checkWin(WIN, HEIGHT):
+def checkWin(WIN, HEIGHT, ballT, displayThread):
+    global runThread
     win = None
 
     if p1Points == 7:# if there is a win, set a winner
@@ -29,6 +30,10 @@ def checkWin(WIN, HEIGHT):
         win = 'Player2'
     
     if win:# if there is a win print it out and update the screen
+        # stops the thread
+        runThread = False
+        ballT.join()
+        displayThread.join()
         WIN.fill((0, 0, 0))
         WIN.blit(WIN_FONT.render(win + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT/2 - 50))
         pygame.display.update()
@@ -121,15 +126,17 @@ def main(WIN, RES, FPS):
             clock.tick(Miscellaneous.TICKSPEED)#fps
 
             for event in pygame.event.get():#loops through the events
-                if event.type == pygame.QUIT:#if it is quit, 
+                if event.type == pygame.QUIT:#if it is quit, quit
                     runThread = False
                     displayThread.join()
+                    ballT.join()
                     sys.exit()
 
                 if event.type == pygame.KEYDOWN:# runs when a key is pressed
                     if event.key == pygame.K_ESCAPE:# if escape is pressed, escape
                         runThread = False
                         displayThread.join()
+                        ballT.join()
                         restartPoints()
                         return False
 
@@ -156,10 +163,7 @@ def main(WIN, RES, FPS):
                 p1Points += 1
                 break
 
-        if checkWin(WIN, HEIGHT):# checks if there is a winner
-            # stops the thread
-            runThread = False
-            displayThread.join()
+        if checkWin(WIN, HEIGHT, ballT, displayThread):# checks if there is a winner
             #restarts the points
             restartPoints()
             break

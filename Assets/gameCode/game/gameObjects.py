@@ -51,9 +51,8 @@ class Ball:
     # moves the ball
     def move(self, players, HEIGHT):
         #init vars
-        collided=False
-
         tempRect = self.rect
+        collided = False
 
         for i in range(abs(self.xVel)):#loops through the ball's xVel and adds 1 to the position
             #sets the colision
@@ -72,18 +71,21 @@ class Ball:
                         self.xVel += 1
                     else:
                         self.xVel -= 1
-
+                    
                     collided = True#if it collided it sets the variable to true
-                    break #breaks out of the for loop
+                    break
             
             #moves the ball's xpos by 1
             if self.xVel > 0:
                 tempRect.x += 1
             else:
                 tempRect.x -= 1
+            
+            if collided:
+                break
 
         tempRect.y += self.yVel# adds the ball to the yVel
 
         self.rect = tempRect
 
-        return collided#returns the velocity
+        return collided
