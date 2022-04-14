@@ -3,9 +3,11 @@ runs the local game
 """
 #imports
 from tkinter import Misc
-import pygame, random, sys, threading
+import pygame, random, sys
 from Assets.gameCode.game.gameObjects import Paddle, Ball
 from Assets.gameCode.game.settings import *
+from threading import Thread
+from Assets.gameCode.game.threadingButItHasAReturnValueThingAlsoIWonderHowLongICouldMakeThisFileNameSoBlaBlaBlaBlaBlaBlaBlaPeeIsStoredInTheBalls import ThreadWthRet
 
 #inits
 pygame.init()
@@ -93,7 +95,7 @@ def main(WIN, RES, FPS):
     BALL = Ball((WIDTH/2 - 10, HEIGHT/2 - 10))
     
     #init thread
-    displayThread = threading.Thread(target=updateDisplayThread, 
+    displayThread = Thread(target=updateDisplayThread, 
         args=(WIN, (WIDTH, HEIGHT), FPS, (PLAYER1, PLAYER2, BALL), ))
     
     #start thread
@@ -118,7 +120,7 @@ def main(WIN, RES, FPS):
         else:
             BALL.xVel = random.choice([-3,3])
 
-        ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
+        ballT = Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
         ballT.start()#starts the ball move thread
 
         while True:#runs every frame
@@ -143,7 +145,7 @@ def main(WIN, RES, FPS):
             keys_pressed = pygame.key.get_pressed()# gets all the keys
 
             collided = ballT.join()
-            ballT = threading.Thread(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
+            ballT = ThreadWthRet(target=BALL.move, args=((PLAYER1.rect, PLAYER2.rect), HEIGHT, ))#inits the ball move thread
             ballT.start()#starts the ball move thread
 
             if keys_pressed[Key_Binds.PLAYER1_UP]:# moves player1 up if in bounds
