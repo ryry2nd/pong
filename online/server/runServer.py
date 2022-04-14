@@ -97,7 +97,7 @@ def main(RES):
             collided = ballThread.join()#gets the threads return value
             ballThread = ThreadWthRet(target=objects[2].move, args=((objects[0].rect, objects[1].rect), HEIGHT, ))#inits ball thread again
             ballThread.start()#starts ball thread
-            
+
             try:
                 p1 = pickle.loads(playerConn[0].recv(4))
                 if p1 != None:# if it is not getting nothing, move the paddle
@@ -106,6 +106,7 @@ def main(RES):
                 playerConn[1].sendall(pickle.dumps(0))
                 playerConn[0].close()
                 playerConn[1].close()
+                ballThread.join()
                 return
             
             try:
@@ -116,6 +117,7 @@ def main(RES):
                 playerConn[0].sendall(pickle.dumps(0))
                 playerConn[0].close()
                 playerConn[1].close()
+                ballThread.join()
                 return
 
             # defines the reply's
@@ -142,8 +144,10 @@ def main(RES):
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(1))
             playerConn[1].sendall(pickle.dumps(1))
+            #closes
             playerConn[0].close()
             playerConn[1].close()
+            ballThread.join()
             return
         elif points[1] >= 7:# if player2's points are >= 7 then player 2 wins
             playerConn[0].recv(4)
@@ -151,6 +155,8 @@ def main(RES):
             #tells the clients who won
             playerConn[0].sendall(pickle.dumps(2))
             playerConn[1].sendall(pickle.dumps(2))
+            #closes
             playerConn[0].close()
             playerConn[1].close()
+            ballThread.join()
             return

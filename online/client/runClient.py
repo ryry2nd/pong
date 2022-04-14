@@ -60,7 +60,8 @@ def updateDisplayThread(WIN, RES, FPS, objectsXPos):
     #game loop
     while runThread:
         clock.tick(FPS)#fps
-        updateDisplay(WIN, RES, objectsXPos)#update the display
+        if type(attributes) != bool and type(attributes) != str and type(attributes) != int:# if attrobutes is not any of these values, update the screen
+            updateDisplay(WIN, RES, objectsXPos)#update the display
 
 #main function
 def main(WIN, RES, FPS, IP):
@@ -110,15 +111,15 @@ def main(WIN, RES, FPS, IP):
         #asks if player 2 has joined yet
         connecting = n.send()
 
-    #delays the screen
+    #counts down
     WIN.fill((0, 0, 0))
     pygame.display.update()
-    
     countDown(WIN, WIDTH, HEIGHT)
     
-    displayThread = threading.Thread(target=updateDisplayThread, args=(WIN, RES, FPS, (p1XPos, p2XPos), ))
 
-    displayThread.start()
+    displayThread = threading.Thread(target=updateDisplayThread, args=(WIN, RES, FPS, (p1XPos, p2XPos), ))#inits the display thread
+
+    displayThread.start()#starts the display thread
 
     while True:# game loop
         moveUp = None#restarts the move Up variable
@@ -172,4 +173,4 @@ def main(WIN, RES, FPS, IP):
             runThread = True
             break
     
-    attributes = {"points": [0, 0], "yourP": -500, "otherP": -500, "ball": [-500, 0]}
+    attributes = {"points": [0, 0], "yourP": -500, "otherP": -500, "ball": [-500, 0]}#sets the attrobutes to their defult value

@@ -32,10 +32,11 @@ def checkWin(WIN, HEIGHT, ballT, displayThread):
         win = 'Player2'
     
     if win:# if there is a win print it out and update the screen
-        # stops the thread
+        # stops the threads
         runThread = False
         ballT.join()
         displayThread.join()
+        #display who won
         WIN.fill((0, 0, 0))
         WIN.blit(WIN_FONT.render(win + " wins!", 1, (255, 255, 255)), (0 + 100, HEIGHT/2 - 50))
         pygame.display.update()
@@ -156,7 +157,7 @@ def main(WIN, RES, FPS):
             if keys_pressed[Key_Binds.PLAYER2_DOWN]:# moves player2 down if in bounds
                 PLAYER2.move(False, HEIGHT, BALL.rect, ballT.join())
             
-            ballT.join()
+            ballT.join()#joins the thread
 
             if BALL.rect.left < 0: # if the ball is on the left increase the score by 1 and restart
                 p2Points += 1
